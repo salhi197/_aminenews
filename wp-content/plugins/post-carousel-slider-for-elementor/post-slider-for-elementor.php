@@ -4,7 +4,7 @@
  Description: Post Carousel Slider for Elementor Lets you display your WordPress Posts as Carousel Slider. You can now show your posts using this plugin easily to your users as a Carousel Slider
  Author: Plugin Devs
  Author URI: https://plugin-devs.com/
- Version: 1.1.1
+ Version: 1.1.2
  License: GPLv2
  License URI: https://www.gnu.org/licenses/gpl-2.0.html
  Text Domain: post-slider-for-elementor
@@ -44,7 +44,7 @@ class WB_POST_SLIDER
  		define( 'WB_PS_MAIN_FILE', __FILE__ );
  		define( 'WB_PS_PATH', plugin_dir_path( __FILE__ ) );
 		define( 'WB_PS_URL', plugin_dir_url( __FILE__ ) ) ;
-		define( 'WB_PS_VERSION', '1.1.1' ) ; //Plugin Version
+		define( 'WB_PS_VERSION', '1.1.2' ) ; //Plugin Version
 		define( 'WB_PS_MIN_ELEMENTOR_VERSION', '2.0.0' ) ; //MINIMUM ELEMENTOR Plugin Version
 		define( 'WB_PS_MIN_PHP_VERSION', '5.4' ) ; //MINIMUM PHP Plugin Version
 		define( 'WB_PS_PRO_LINK', 'https://plugin-devs.com/product/post-carousel-slider-for-elementor/' ) ; //Pro Link

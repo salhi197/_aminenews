@@ -82,7 +82,7 @@ class ElementsKit_Widget_Category_List extends Widget_Base {
 				'fa4compatibility' => 'icon',
                 'default' => [
                     'value' => 'fas fa-check',
-                    'library' => 'solid',
+                    'library' => 'fa-solid',
                 ],
 				'label_block' => true,
 			]

@@ -16,7 +16,7 @@ class ElementsKit_Widget_Heading_Handler extends \ElementsKit_Lite\Core\Handler_
     }
 
     static function get_categories() {
-        return [ 'elementskit-lite' ];
+        return [ 'elementskit' ];
     }
 
     static function get_dir() {

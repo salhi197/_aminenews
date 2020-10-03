@@ -101,7 +101,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 
 			$this->includes();
 
-			add_action( 'admin_notices', array( $this, 'admin_notices' ) );
+			add_action( 'plugin_action_links_' . ASTRA_SITES_BASE, array( $this, 'action_links' ) );
 			add_action( 'plugins_loaded', array( $this, 'load_textdomain' ) );
 			add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue' ), 99 );
 			add_action( 'wp_enqueue_scripts', array( $this, 'image_search_scripts' ) );
@@ -903,16 +903,6 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		}
 
 		/**
-		 * Admin Notices
-		 *
-		 * @since 1.0.5
-		 * @return void
-		 */
-		public function admin_notices() {
-			add_action( 'plugin_action_links_' . ASTRA_SITES_BASE, array( $this, 'action_links' ) );
-		}
-
-		/**
 		 * Show action links on the plugin screen.
 		 *
 		 * @param   mixed $links Plugin Action links.
@@ -1072,7 +1062,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		public function admin_enqueue( $hook = '' ) {
 
 			// Image Search assets.
-			if ( 'post.php' === $hook || 'widgets.php' === $hook ) {
+			if ( 'post-new.php' === $hook || 'post.php' === $hook || 'widgets.php' === $hook ) {
 				$this->image_search_assets();
 			}
 

@@ -222,12 +222,7 @@ class ElementsKit_Widget_Countdown_Timer extends Widget_Base {
 					'size' => '',
 				],
 				'selectors'		 => [
-                    '{{WRAPPER}} .elementskit-countdown-timer-4 .elementskit-timer-content .elementskit-timer-count,
-                    {{WRAPPER}} .elementskit-countdown-timer-3 .elementskit-timer-content .elementskit-timer-count,
-					{{WRAPPER}} .elementskit-countdown-timer-3.elementskit-version-box .elementskit-timer-content,
-					{{WRAPPER}} .elementskit-countdown-timer .elementskit-timer-container .elementskit-inner-container,
-					{{WRAPPER}} .elementskit-flip-clock .elementskit-flip,
-					{{WRAPPER}} .elementskit-countdown-timer-2 .elementskit-timer-container '	=> 'width: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .ekit-countdown-inner'	=> 'width: {{SIZE}}{{UNIT}};',
                 ],
 
 			]
@@ -250,12 +245,7 @@ class ElementsKit_Widget_Countdown_Timer extends Widget_Base {
                 ],
                 'size_units'	 => ['px'],
                 'selectors'		 => [
-                    '{{WRAPPER}} .elementskit-countdown-timer-4 .elementskit-timer-content .elementskit-timer-count,
-                    {{WRAPPER}} .elementskit-countdown-timer-3 .elementskit-timer-content .elementskit-timer-count,
-					{{WRAPPER}} .elementskit-countdown-timer-3.elementskit-version-box  .elementskit-timer-content,
-					{{WRAPPER}} .elementskit-countdown-timer .elementskit-timer-container .elementskit-inner-container,
-					{{WRAPPER}} .elementskit-flip-clock .elementskit-time,
-					{{WRAPPER}} .elementskit-countdown-timer-2 .elementskit-timer-container '	=> 'height: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .ekit-countdown-inner'	=> 'height: {{SIZE}}{{UNIT}};',
                 ],
 
             ]
@@ -314,9 +304,7 @@ class ElementsKit_Widget_Countdown_Timer extends Widget_Base {
 				],
                 'size_units'	 => ['px'],
                 'selectors'		 => [
-                    '{{WRAPPER}} .elementskit-countdown-timer .elementskit-timer-container:not(:last-child)'	=> 'margin-bottom: {{SIZE}}{{UNIT}};',
-                    '{{WRAPPER}} .elementskit-countdown-timer-3 .elementskit-timer-container:not(:last-child)'	=> 'margin-bottom: {{SIZE}}{{UNIT}};',
-                    '{{WRAPPER}} .elementskit-flip-clock .elementskit-time'	=> 'margin-bottom: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .ekit-countdown-inner'	=> 'margin-bottom: {{SIZE}}{{UNIT}};',
                 ],
             ]
         );

@@ -16,7 +16,7 @@ class ElementsKit_Widget_Business_Hours_Handler extends \ElementsKit_Lite\Core\H
     }
 
     static function get_categories() {
-        return [ 'elementskit-lite' ];
+        return [ 'elementskit' ];
     }
 
     static function get_dir() {

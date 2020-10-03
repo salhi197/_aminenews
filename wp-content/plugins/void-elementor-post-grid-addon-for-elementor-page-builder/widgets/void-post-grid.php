@@ -12,7 +12,19 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
  * @since 1.0.0
  */
 
-class Void_Post_Grid extends Widget_Base {   //this name is added to plugin.php of the root folder
+class Void_Post_Grid extends Widget_Base {
+    //this name is added to plugin.php of the root folder
+
+    public function __construct( $data = [], $args = null ) {
+        parent::__construct( $data, $args );
+        // load default font awesome from elementor
+        if(class_exists('\Elementor\Icons_Manager')){
+            \Elementor\Icons_Manager::enqueue_shim();
+        }
+		$this->add_style_depends('google-font-poppins');
+		$this->add_style_depends('void-grid-main');
+		$this->add_script_depends('void-elementor-grid-js');
+	}
 
 	public function get_name() {
 		return 'void-post-grid';
@@ -42,9 +54,9 @@ class Void_Post_Grid extends Widget_Base {   //this name is added to plugin.php 
 	 * A list of scripts that the widgets is depended in
 	 * @since 1.3.0
 	 **/
-protected function _register_controls() {
-		
-//start of a control box
+    protected function _register_controls() {
+            
+    //start of a control box
 		$this->start_controls_section(
 			'section_content',
 			[
@@ -68,19 +80,19 @@ protected function _register_controls() {
                 'options' => void_grid_post_type(),                                
             ]
         );
-        $this->add_control(
+
+        $repeater = new \Elementor\Repeater();
+
+        $repeater->add_control(
             'taxonomy_type',
             [
                 'label' => __( 'Select Taxonomy', 'void' ),
                 'type' => Controls_Manager::SELECT2,
-                'options' => '', 
-                'condition' => [
-                            'post_type!' =>'',
-                        ],                              
+                'options' => (object) array(),                              
             ]
         );
         
-        $this->add_control(
+        $repeater->add_control(
             'terms',
             [
                 'label' => __( 'Select Terms (usually categories/tags) * Must Select Taxonomy First', 'void' ),
@@ -94,15 +106,126 @@ protected function _register_controls() {
             ]
         );
 
+        $repeater->add_control(
+            'compare',
+            [
+                'label' => __( 'Compare(Operator)', 'void' ),
+                'type' => Controls_Manager::TEXT,
+                'default' => 'IN',
+                'label_block' => true,
+            ]
+        );
+        $repeater->add_control(
+            'reffer_compare',
+            [
+                'raw' => __( 'To know about operator check <a href="https://elequerybuilder.com/operator/" target="_blank">this</a>', 'void' ),
+                'type' => Controls_Manager::RAW_HTML,
+                'classes' => 'elementor-descriptor',
+            ]
+        );
+
+        $this->add_control(
+            'tax_fields',
+            [
+                'label' => __( 'Taxonomy & terms combination', 'void' ),
+                'type' => Controls_Manager::REPEATER,
+                'fields' => $repeater->get_controls(),
+                'label_block' => true,
+                'item_actions' => array('duplicate' => false),
+                'default' => [
+                    [
+                        'taxonomy_type' => '',
+                        'terms' => '',
+                        
+                    ],
+                ],
+                'title_field' => '{{{ taxonomy_type }}}', 
+                          
+            ]
+        );
+
+        $this->add_control(
+            'tax_fields_relation',
+            [
+                'label' => __( 'Fields Relation', 'void' ),
+                'type' => Controls_Manager::SWITCHER,
+                'label_on' => __( 'AND', 'void' ),
+                'label_off' => __( 'OR', 'void' ),
+                'return_value' => 'AND',
+                'default' => 'OR',
+                
+            ]
+        );
+
+        $this->add_control(
+			'meta_query_section',
+			[
+				'label' => __( 'Meta query', 'void' ),
+				'type' => \Elementor\Controls_Manager::HEADING,
+				'separator' => 'before',
+			]
+        );
+        
+        $this->add_control(
+            'meta_key',
+            [
+                'label' => __( 'Name/Key', 'void' ),
+                'type' => \Elementor\Controls_Manager::TEXT,
+                'options' => '',
+                'label_block' => true,
+
+            ]
+        );
+        $this->add_control(
+            'meta_value',
+            [
+                'label' => __( 'Value', 'void' ),
+                'type' => Controls_Manager::TEXT,
+                'options' => '',
+                'label_block' => true,
+                'placeholder' => __( 'i.e. value1, value2', 'void' ),
+                'condition' => [
+                    'meta_key!' =>'',
+                ] 
+            ]
+        );
+        $this->add_control(
+            'meta_compare',
+            [
+                'label' => __( 'Compare(Operator)', 'void' ),
+                'type' => Controls_Manager::TEXT,
+                'options' => '',
+                'label_block' => true,
+                 
+                'condition' => [
+                    'meta_value!' =>'',
+                ] 
+            ]
+        );
+        $this->add_control(
+            'reffer_custom_compare',
+            [
+                'raw' => __( 'To know about operator check <a href="https://elequerybuilder.com/operator/" target="_blank">this</a>', 'void' ),
+                'type' => Controls_Manager::RAW_HTML,
+                'classes' => 'elementor-descriptor',
+                'condition' => [
+                    'meta_value!' =>'',
+                ] 
+            ]
+        );
+
         $this->add_control(
           'cat_exclude',
-          [
-             'label'       => __( 'Include / Exclude With Category ID', 'void' ),
-             'label_block' => true,
-             'type'        => Controls_Manager::TEXT,
-             'description' => __( 'Get post category id and add them here. To Include use the id(s) directly (Example: 1,2,3), To exclude category add a minus sign before the category ID (Example : -1,-44,-3343)', 'void' ),
-             'placeholder' => __( '-1,-2,-33,10,11', 'void' ),
-          ]
+            [
+                'label'       => __( 'Include / Exclude With Category ID', 'void' ),
+                'label_block' => true,
+                'type'        => Controls_Manager::TEXT,
+                'description' => __( 'Get post category id and add them here. To Include use the id(s) directly (Example: 1,2,3), To exclude category add a minus sign before the category ID (Example : -1,-44,-3343)', 'void' ),
+                'placeholder' => __( '-1,-2,-33,10,11', 'void' ),
+                'condition' => [
+                    'post_type' => 'post',
+                ],
+            ]
         );
         $this->add_control(
             'reffer_category_find',
@@ -110,6 +233,9 @@ protected function _register_controls() {
                 'raw' => __( 'For finding out your category ID follow <a href="https://voidcoders.com/find-category-id-wordpress/" target="_blank">this</a>', 'void' ),
                 'type' => Controls_Manager::RAW_HTML,
                 'classes' => 'elementor-descriptor',
+                'condition' => [
+                    'post_type' => 'post',
+                ],
             ]
         );
 
@@ -145,8 +271,8 @@ protected function _register_controls() {
                     ],
                     'default' => 1,
                     'condition' => [
-                            'posts!' => -1,
-                        ]
+                        'posts!' => -1,
+                    ]
                 ]
             );
         $this->add_control(
@@ -213,13 +339,14 @@ protected function _register_controls() {
                 'label' => esc_html__( 'Choose your desired style', 'void' ),
                 'type' => Controls_Manager::SELECT,
                 'options' => [
-                    '1' => 'Grid Layout', 
-                    '2' => 'List Layout', 
-                    '3' => '1st Full Post then Grid',
-                    '4' => '1st Full Post then List',
-                    '5' => 'Minimal Grid'
+                    'grid-1' => 'Grid style', 
+                    'list-1' => 'List style', 
+                    'first-full-post-grid-1' => '1st Full Post then Grid',
+                    'first-full-post-list-1' => '1st Full Post then List',
+                    'minimal' => 'Minimal Grid'
                 ],
-                'default' => '1'
+                'default' => 'grid-1',
+                'label_block' => true,
             ]
         );
 
@@ -229,7 +356,7 @@ protected function _register_controls() {
                 'label' => esc_html__( 'Posts Per Row', 'void' ),
                 'type' => Controls_Manager::SELECT,
                 'condition' => [
-                    'display_type' => ['1','5'],
+                    'display_type' => ['grid-1', 'grid-2', 'minimal'],
                 ],
                 'options' => [
                     '1' => '1',
@@ -267,6 +394,7 @@ protected function _register_controls() {
                 'condition' => [
                     'filter_thumbnail!' => 'NOT EXISTS',
                 ],
+                
 			]
 		);
         $this->add_control(
@@ -275,11 +403,11 @@ protected function _register_controls() {
                 'label' => esc_html__('Featured Image Style', 'void'),
                 'type'  => Controls_Manager::SELECT2,
                 'options' => [
-                    '1' => 'Standard',
-                    '2' => 'left top rounded',
-                    '3' => 'left bottom rounded'
+                    'standard' => 'Standard',
+                    'top-left' => 'left top rounded',
+                    'top-right' => 'left bottom rounded'
                 ],
-                'default'   => '1',
+                'default'   => 'standard',
                 'condition' => [
                     'filter_thumbnail!' => 'NOT EXISTS',
                 ],
@@ -287,7 +415,45 @@ protected function _register_controls() {
         );
        
       
-		$this->end_controls_section();
+        $this->end_controls_section();
+        
+        $this->start_controls_section(
+            'section_filter_void_grid',
+            [
+                'label' => esc_html__( 'Filter bar', 'void' ),
+                'tab' => Controls_Manager::TAB_CONTENT,
+                'condition' => [
+                    'display_type!' => [ 'first-full-post-grid-1', 'first-full-post-list-1' ],
+                ],
+            ]
+        );
+
+        $this->add_control(
+			'void_show_filter_bar',
+			[
+				'label' => __( 'Show', 'void' ),
+				'type' => Controls_Manager::SWITCHER,
+				'label_on' => __( 'Show', 'void' ),
+				'label_off' => __( 'Hide', 'void' ),
+				'return_value' => 'true',
+				'default' => 'false',
+			]
+        );
+
+        $this->add_control(
+			'void_show_all_filter_bar',
+			[
+				'label' => __( 'All show', 'void' ),
+				'type' => Controls_Manager::SWITCHER,
+				'label_on' => __( 'On', 'void' ),
+				'label_off' => __( 'Off', 'void' ),
+				'return_value' => 'true',
+                'default' => 'true',
+                'condition' => ['void_show_filter_bar' => 'true']
+			]
+        );
+
+        $this->end_controls_section();
 
 
 
@@ -364,6 +530,33 @@ protected function _register_controls() {
         );
 
         $this->add_responsive_control(
+            'meta_font_size',
+            [
+                'label' => esc_html__( 'Meta Size', 'void' ),
+                'type' => Controls_Manager::SLIDER,
+                'range' => [
+                    'px' => [
+                        'min' => 0,
+                        'max' => 1000,
+                        'step' => 5,
+                    ],
+                    '%' => [
+                        'min' => 0,
+                        'max' => 100,
+                    ],
+                ],
+                'size_units' => [ 'px', '%' ],
+                'default' => [
+					'unit' => 'px',
+					'size' => 15,
+				],
+                'selectors' => [
+                    '{{WRAPPER}} .entry-meta span a' => 'font-size: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
             'meta_color',
             [
                 'label' => esc_html__( 'Meta Color', 'void' ),
@@ -391,7 +584,7 @@ protected function _register_controls() {
                 'label' => esc_html__( 'Meta Icon Color', 'void' ),
                 'type' => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .entry-meta' => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .entry-meta i' => 'color: {{VALUE}};',
                 ],
             ]
         );
@@ -506,6 +699,9 @@ protected function _register_controls() {
                 'selectors' => [
                     '{{WRAPPER}} .void-grid-nav' => 'text-align: {{VALUE}};',
                 ],
+                'condition' => [
+                    'posts!' => -1,
+                ]
             ]
         );
         $this->add_responsive_control(
@@ -526,8 +722,11 @@ protected function _register_controls() {
                 ],
                 'size_units' => [ 'px', '%' ],
                 'selectors' => [
-                    '{{WRAPPER}} .void-grid-nav' => 'font-size: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .void-grid-nav, {{WRAPPER}} .void-grid-nav a' => 'font-size: {{SIZE}}{{UNIT}};',
                 ],
+                'condition' => [
+                    'posts!' => -1,
+                ]
             ]
         );
 
@@ -535,53 +734,303 @@ protected function _register_controls() {
 
 	}
 
+	protected function render() {
+        //to show on the fontend 
+        $settings = $this->get_settings();
 
-	protected function render() {				//to show on the fontend 
-		$settings = $this->get_settings();	
-        if( !empty($settings['taxonomy_type'])){
-            $terms = get_terms( array(
-                'taxonomy' => $settings['taxonomy_type'],
-                'hide_empty' => true,
-            ));
-            foreach ( $terms as $term ){
-                $term_id[] = $term -> term_id; 
+        global $col_no, $count, $col_width, $display_type, $is_filter;
+
+        $post_type        = isset($settings['post_type'])? $settings['post_type']: '';
+        $filter_thumbnail = isset($settings['filter_thumbnail'])? $settings['filter_thumbnail']: '';
+        $cat_exclude      = isset($settings['cat_exclude'])? $settings['cat_exclude']: ''; // actually include or exclude both
+        $display_type     = isset($settings['display_type'])? $settings['display_type']: 'grid-1';   
+        $posts            = isset($settings['posts'])? $settings['posts']: '';
+        $posts_per_row    = isset($settings['posts_per_row'])? $settings['posts_per_row']: '';      
+        $image_style      = isset($settings['image_style'])? $settings['image_style']: 'standard';
+        $orderby          = isset($settings['orderby'])? $settings['orderby']: '';
+        $order            = isset($settings['order'])? $settings['order']: '';
+        $offset           = isset($settings['offset'])? $settings['offset']: ''; 
+        $sticky_ignore    = isset($settings['sticky_ignore'])? $settings['sticky_ignore']: '';
+        $pagination_yes   = isset($settings['pagination_yes'])? $settings['pagination_yes']: '';
+        $image_size       = isset($settings['image_size'])? $settings['image_size']: 'standart';
+        $is_filter        = isset($settings['void_show_filter_bar'])? $settings['void_show_filter_bar']: 'false';
+        $is_all_filter    = isset($settings['void_show_all_filter_bar'])? $settings['void_show_all_filter_bar']: 'false';
+
+        $all_terms = [];
+
+        //build variable needed for tax_query
+        if( !empty($settings[ 'tax_fields' ][0]['taxonomy_type']) ){
+    
+            if( !empty($settings[ 'tax_fields_relation' ]) ){
+                $tax_query[ 'relation' ] = $settings[ 'tax_fields_relation' ];
+            }else{
+                $tax_query[ 'relation' ] = 'OR';
             }
+            foreach ($settings[ 'tax_fields' ] as $key => $value) {
+                if( !empty($value['taxonomy_type'])){
+                    // remove _id key set by ELEMENTOR CODE
+                    unset( $value[ '_id' ] );
+                    //as WP_QUERY uses taxonomy key not taxonomy_type
+                    $value['taxonomy'] = $value['taxonomy_type'];
+                    unset( $value['taxonomy_type'] );
+
+                    $value['terms'] = is_array($value['terms']) ? $value['terms'] : [];
+                    //if current post is chosen, get current post terms based on taxonomy chosen
+                    foreach( $value[ 'terms' ] as $index => $val ){
+                        if( $val == 'current' ){
+                            unset( $value[ 'terms' ][$index] );
+                            $current_post_terms = get_the_terms( get_the_ID(), $value['taxonomy']  );
+                            foreach( $current_post_terms as $index => $term ){
+                                //only push terms array if that term is not actively selected, concetaning with '' to returned ineger term_id into string to be used on in_arry as select returns as array
+                                if( !( in_array( $term->term_id . '', $value['terms'] ) ) ){
+                                    array_push( $value['terms'], $term->term_id );
+                                }                       
+                            }
+                        }
+                    }
+
+                    // set all terms on empty term input under the taxonomy
+                    if(empty($value[ 'terms' ])){
+                        $terms = get_terms( array(
+                            'taxonomy' => $value['taxonomy'],
+                            'hide_empty' => false
+                        ) );
+                        foreach($terms as $term_key => $term_val){
+                            $value['terms'][] = $term_val->term_id;
+                        }
+                    }
+                    $tax_query[] = $value;
+                    $all_terms[$key] = $value['terms'];
+                }else{
+                    $tax_query = '';
+                }
+            }
+
+        }else{
+            $tax_query = '';
         }
-		if(!empty($settings['terms'])){
-				$category = implode (", ", $settings['terms']);             
-		}
-        elseif( !empty($settings['taxonomy_type'])) {
-            $category=implode(", ", $term_id);
+
+        // process unique terms according to and, or relation for filtering
+        $unique_terms = [];
+        if(count($all_terms) > 1){
+            for( $i=0; $i < count($all_terms); $i++){
+                if($i < (count($all_terms)-1) ){
+                    $tmp_array = array_merge($unique_terms, $all_terms[$i]);
+                    if($tax_query[ 'relation' ] == 'AND'){
+                        $unique_terms = array_intersect($tmp_array, $all_terms[$i+1]);
+                    }else{
+                        $unique_terms = array_unique(array_merge($tmp_array, $all_terms[$i+1]));
+                    }
+                }
+            }
+        }else{
+            $unique_terms = isset($all_terms[0])? $all_terms[0]: [];
         }
-        else{
-            $category = '';
+
+        $meta_query = [];
+
+        if(!empty($settings['meta_value']) || !empty($settings['meta_key'])){
+            $meta['key'] = isset($settings['meta_key'])? $settings['meta_key']: '';
+            $meta['value'] = isset($settings['meta_value'])? $settings['meta_value']: '';
+            $meta['compare'] = isset($settings['meta_compare'])? $settings['meta_compare']: '';
+            $meta_query[] = $meta;
         }
-		echo'<div class="elementor-shortcode">';
-            echo do_shortcode('[voidgrid_sc_post_grid filter_thumbnail="'.$settings['filter_thumbnail'].'" cat_exclude="'.$settings['cat_exclude'].'" post_type="'.$settings['post_type'].'" pagination_yes="'.$settings['pagination_yes'].'" display_type="'.$settings['display_type'].'" posts="'.$settings['posts'].'" posts_per_row="'.$settings['posts_per_row'].'" image_style="'.$settings['image_style'].'" sticky_ignore="'.$settings['sticky_ignore'].'"  orderby="'.$settings['orderby'].'" order="'.$settings['order'].'" offset="'.$settings['offset'].'"  terms="'.$category.'" taxonomy_type="'.$settings['taxonomy_type'].'" image_size="'. $settings['image_size'] .'" ]');    
+
+        if($filter_thumbnail){
+            $void_image_condition = [
+                [
+                    'key' => '_thumbnail_id',
+                    'compare' => $filter_thumbnail,
+                ]
+            ];
+        } else {
+            $void_image_condition='';
+        }
+
+        $meta_query[] = $void_image_condition;
+
+        set_transient('void_grid_image_size', $image_size, '60' );
+    
+        $count = 0;         
+
+        // calculate column width by post per row 
+        $col_width = ( ($posts_per_row != '') ? (12 / $posts_per_row): 12 );
+        // assign column number by post per row
+        $col_no = ( ($posts_per_row != '') ? $posts_per_row : 1 );
+    
+        $templates = new \Void_Template_Loader;
+    
+        $grid_query= null;
+    
+        if ( get_query_var('paged') ) {
+            $paged = get_query_var('paged');
+        } elseif ( get_query_var('page') ) { // if is static front page
+            $paged = get_query_var('page');
+        } else {
+            $paged = 1;
+        }
+    
+        $args = [
+            'post_type'      => $post_type,
+            'meta_query'     => $meta_query,
+            'cat'            => $cat_exclude,        // actually include or exclude both  
+            'post_status'    => 'publish',
+            'posts_per_page' => $posts, 
+            'paged'          => $paged,   
+            'tax_query'      => $tax_query,
+            'orderby'        => $orderby,
+            'order'          => $order,   //ASC / DESC
+            'ignore_sticky_posts' => $sticky_ignore,
+            'void_grid_query' => 'yes',
+            'void_set_offset' => $offset,
+        ];
+    
+        $grid_query = new \WP_Query( $args );
+        
+        global $post_count;
+        $post_count = $posts;
+
+        echo'<div class="void-elementor-post-grid-wrapper">';
+            ?>
+            <div class="void-Container <?php echo esc_attr($image_style); ?>">
+            <!-- turn on filter section if it's on in settings. this section needs extra markup -->
+            <?php if($is_filter == 'true' && !in_array($display_type, ['first-full-post-grid-1', 'first-full-post-list-1'])): ?>
+                <div class="shuffle-wrapper">
+                    <div class="void-row">
+                        <div class="void-col-md-12">
+                            <div class="btn-group btn-group-toggle void-elementor-post-grid-shuffle-btn" data-toggle="buttons">
+                            <!-- all filter show according to the settings -->
+                                <?php if($is_filter == 'true' && $is_all_filter == 'true') : ?>
+                                    <label class="btn active">
+                                        <input class="void-shuffle-all-filter" type="radio" name="vepg-shuffle-filter" value="all" checked="checked" />All
+                                    </label>
+                                <?php endif; ?>
+                                <?php foreach($unique_terms as $k => $v) :
+                                    $term = get_term($v);
+                                ?>
+                                <!-- show all terms with filter button -->
+                                    <label class="btn <?php echo esc_attr((!$is_all_filter && $k==0)? 'active': ''); ?>">
+                                        <input type="radio" name="vepg-shuffle-filter" value="<?php echo esc_attr($term->term_id); ?>" <?php echo esc_attr((!$is_all_filter && $k==0)? 'checked="checked"': ''); ?> /><?php echo esc_html($term->name); ?>
+                                    </label>
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- shuffle div start. if filter is on -->
+                    <div class="shuffle-box void-elementor-post-grid-<?php echo esc_attr($display_type); ?>">
+            <?php else: ?>
+            <!-- only this div will show if there was no filter -->
+                <div class="void-row">
+            <?php endif;
+            // archive page conditon for using wp default query.
+                if(is_archive()){
+                    // wp default query
+                    if(have_posts()):
+                        while ( have_posts() ) : the_post();
+                        $count++;
+                        $templates->get_template_part( 'content', $display_type );
+                
+                        endwhile; // End of posts loop found posts
+                            if($is_filter == 'true' && !in_array($display_type, ['first-full-post-grid-1', 'first-full-post-list-1'])): ?>
+                            <!-- filter section closing divs -->
+                                </div>
+                            <div class="void-col-md-<?php echo esc_attr( $col_width );?> filter-sizer"></div>
+                        </div>
+                        <?php else: ?>
+                        <!-- only this div will be closed if there is no filter -->
+                        </div>
+                        <?php endif;
+                        if($pagination_yes==1) : 
+                            //Start of pagination condition 
+                            global $wp_query;
+                            $big = 999999999; // need an unlikely integer
+                            $current = max(1,$paged );
+                            $paginate_args = [
+                                'base' => str_replace($big, '%#%', esc_url(get_pagenum_link($big))) ,
+                                'format' => '?paged=%#%',
+                                'current' => $current,
+                                'show_all' => False,
+                                'prev_next' => True,
+                                'prev_text' => esc_html__('« Previous') ,
+                                'next_text' => esc_html__('Next »') ,
+                                'type' => 'plain',
+                                'add_args' => False,
+                            ];
+                
+                            $pagination = paginate_links($paginate_args); ?>
+                            <div class="col-md-12">
+                                <nav class='pagination wp-caption void-grid-nav'> 
+                                <?php echo $pagination; ?>
+                                </nav>
+                            </div>
+                        <?php
+                        endif; //end of pagination condition
+                    else:
+                        $templates->get_template_part( 'content', 'none' );
+                    endif;
+                }else{
+                    // custom query will be work if this is not archive page
+                    if ( $grid_query->have_posts() ) : 
+                
+                            /* Start the Loop */
+                        while ( $grid_query->have_posts() ) : $grid_query->the_post();  // Start of posts loop found posts
+                            $count++;
+                            $templates->get_template_part( 'content', $display_type );
+                
+                        endwhile; // End of posts loop found posts
+                            if($is_filter == 'true' && !in_array($display_type, ['first-full-post-grid-1', 'first-full-post-list-1'])): ?>
+                             <!-- filter section closing divs -->
+                            </div>
+                        <div class="void-col-md-<?php echo esc_attr( $col_width );?> filter-sizer"></div>
+                        </div>
+                        <?php else: ?>
+                        <!-- only this div will be closed if there is no filter -->
+                        </div>
+                        <?php endif;
+                        if($pagination_yes==1) :  //Start of pagination condition 
+                            global $wp_query;
+                            $big = 999999999; // need an unlikely integer
+                            $totalpages = $grid_query->max_num_pages;
+                            $current = max(1,$paged );
+                            $paginate_args = [
+                                'base' => str_replace($big, '%#%', esc_url(get_pagenum_link($big))) ,
+                                'format' => '?paged=%#%',
+                                'current' => $current,
+                                'total' => $totalpages,
+                                'show_all' => False,
+                                'end_size' => 1,
+                                'mid_size' => 3,
+                                'prev_next' => True,
+                                'prev_text' => esc_html__('« Previous') ,
+                                'next_text' => esc_html__('Next »') ,
+                                'type' => 'plain',
+                                'add_args' => False,
+                            ];
+                
+                            $pagination = paginate_links($paginate_args); ?>
+                            <div class="col-md-12">
+                                <nav class='pagination wp-caption void-grid-nav'> 
+                                <?php echo $pagination; ?>
+                                </nav>
+                            </div>
+                        <?php endif; //end of pagination condition ?>
+            
+            
+                    <?php else :   //if no posts found
+            
+                        $templates->get_template_part( 'content', 'none' );
+            
+                    endif; //end of post loop 
+                }
+                ?>
+                
+            </div>
+            
+            <?php
+            wp_reset_postdata();    
 		echo'</div>';
 	}
 
-}
-
-$current_url=esc_url("//".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
-
-if( strpos( $current_url, 'action=elementor') == true ){
-    add_action( 'wp_footer', function() {
-
-    if ( ! defined( 'ELEMENTOR_VERSION' ) ) {
-        return;
-    }
-   
-    // load our jquery file that sends the $.post request
-    wp_enqueue_script( "void-grid-ajax", plugins_url('assets/js/void-ajax.js', dirname(__FILE__)) , array( 'jquery', 'json2' ) );
- 
-    // make the ajaxurl var available to the above script
-    wp_localize_script( 'void-grid-ajax', 'void_grid_ajax', array(
-                                                            'ajaxurl'          => admin_url( 'admin-ajax.php' ),
-                                                            'postTypeNonce' => wp_create_nonce( 'voidgrid-post-type-nonce' ),
-                                                            ) 
-    );
-} );
 }
 
 

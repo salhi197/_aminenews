@@ -323,6 +323,14 @@ class ElementsKit_Widget_Team extends Widget_Base {
             ]
         );
 
+        $social->add_group_control(
+            Group_Control_Border::get_type(),
+            [
+                'name' => 'ekit_team_socialmedia_border_hover',
+                'label' => esc_html__( 'Border', 'elementskit-lite' ),
+                'selector' => '{{WRAPPER}} {{CURRENT_ITEM}} > a:hover',
+            ]
+        );
 
         $social->add_group_control(
             Group_Control_Text_Shadow::get_type(),
@@ -337,15 +345,6 @@ class ElementsKit_Widget_Team extends Widget_Base {
             Group_Control_Box_Shadow::get_type(), [
                 'name'       => 'ekit_team_socialmedai_list_box_shadow_hover',
                 'selector'   => '{{WRAPPER}} {{CURRENT_ITEM}} > a:hover',
-            ]
-        );
-
-        $social->add_group_control(
-            Group_Control_Border::get_type(),
-            [
-                'name' => 'ekit_team_socialmedia_border_hover',
-                'label' => esc_html__( 'Border', 'elementskit-lite' ),
-                'selector' => '{{WRAPPER}} {{CURRENT_ITEM}} > a:hover',
             ]
         );
 
@@ -378,7 +377,7 @@ class ElementsKit_Widget_Team extends Widget_Base {
         $this->start_controls_section(
 			'ekit_team_popup_details',
 			[
-				'label' => esc_html__( 'Pop Up And Sidebar Details', 'elementskit-lite' ),
+				'label' => esc_html__( 'Pop Up Details', 'elementskit-lite' ),
                 'tab' => Controls_Manager::TAB_CONTENT,
 			]
         );
@@ -391,21 +390,6 @@ class ElementsKit_Widget_Team extends Widget_Base {
 				'default' => 'yes',
 			]
 		);
-
-        $this->add_control(
-			'ekit_team_chose_popup_style',
-			[
-				'label' => esc_html__( 'Popup Style', 'elementskit-lite' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'popup',
-				'options' => [
-					'popup'  => esc_html__( 'Popup', 'elementskit-lite' ),
-                ],
-                'condition' => [
-                    'ekit_team_chose_popup' => 'yes'
-                ]
-			]
-        );
 
         $this->add_control(
             'ekit_team_description',
@@ -447,30 +431,6 @@ class ElementsKit_Widget_Team extends Widget_Base {
             ]
         );
 
-        $this->add_control(
-            'ekit_team_chose_sidebar_direction',
-            [
-                'label' => esc_html__( 'Sidebar Direction', 'elementskit-lite' ),
-                'type' => Controls_Manager::CHOOSE,
-                'options' => [
-                    'elementskit_sidebar_left' => [
-                        'title' => esc_html__( 'Left', 'elementskit-lite' ),
-                        'icon' => 'fa fa-caret-left',
-                    ],
-                    'elementskit_sidebar_right' => [
-                        'title' => esc_html__( 'Right', 'elementskit-lite' ),
-                        'icon' => 'fa fa-caret-right',
-                    ],
-                ],
-                'default' => 'elementskit_sidebar_right',
-                'toggle' => true,
-                'condition' => [
-                    'ekit_team_chose_popup_style' => 'sidebar',
-                    'ekit_team_chose_popup' => 'yes'
-                ]
-            ]
-        );
-
         // Close icon change option
         $this->add_control(
             'ekit_team_close_icon_changes',
@@ -480,7 +440,7 @@ class ElementsKit_Widget_Team extends Widget_Base {
                 'fa4compatibility' => 'ekit_team_close_icon_change',
                 'default' => [
                     'value' => 'fas fa-times',
-                    'library' => 'solid',
+                    'library' => 'fa-solid',
                 ],
                 'label_block' => true,
                 'condition' => [
@@ -500,18 +460,14 @@ class ElementsKit_Widget_Team extends Widget_Base {
                         'title' => esc_html__( 'Left', 'elementskit-lite' ),
                         'icon' => 'fa fa-align-left',
                     ],
-                    'center' => [
-                        'title' => esc_html__( 'Center', 'elementskit-lite' ),
-                        'icon' => 'fa fa-align-center',
-                    ],
                     'right' => [
                         'title' => esc_html__( 'Right', 'elementskit-lite' ),
                         'icon' => 'fa fa-align-right',
                     ],
                 ],
-                // 'selectors' => [
-                //     '.ekit-wid-con .modal-header'   => 'text-align: center'
-                // ],
+                'selectors' => [
+                    '{{WRAPPER}} .ekit-team-modal-close' => '{{VALUE}}: 10px;',
+                ],
                 'default' => 'right',
                 'condition' => [
                     'ekit_team_chose_popup' => 'yes'
@@ -1763,47 +1719,9 @@ class ElementsKit_Widget_Team extends Widget_Base {
                 'name' => 'ekit_team_modal_background',
                 'label' => esc_html__( 'Background', 'elementskit-lite' ),
                 'types' => [ 'classic', 'gradient' ],
-                'selector' => '{{WRAPPER}} .elementskit-team-popup .modal-content, {{WRAPPER}} .elementskit-team-sidebar .elementskit-modal-dialog',
+                'selector' => '{{WRAPPER}} .elementskit-team-popup .modal-content',
             ]
         );
-
-        $this->add_control(
-            'ekit_team_modal_image_heading',
-            [
-                'label' => esc_html__( 'Image', 'elementskit-lite' ),
-                'type' => Controls_Manager::HEADING,
-                'separator' => 'before',
-            ]
-        );
-
-
-        $this->add_responsive_control(
-            'ekit_team_modal_image_margin',
-            [
-                'label' => esc_html__( 'Margin Bottom', 'elementskit-lite' ),
-                'type' => Controls_Manager::SLIDER,
-                'size_units' => [ 'px', '%' ],
-                'range' => [
-                    'px' => [
-                        'min' => 0,
-                        'max' => 200,
-                        'step' => 1,
-                    ],
-                    '%' => [
-                        'min' => 0,
-                        'max' => 100,
-                    ],
-                ],
-                'default' => [
-                    'unit' => 'px',
-                    'size' => 20,
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .elementskit-team-sidebar .modal_image_wraper' => 'margin-bottom: {{SIZE}}{{UNIT}};',
-                ],
-            ]
-        );
-
 
         $this->add_control(
 			'ekit_team_modal_name_heading',
@@ -1820,7 +1738,7 @@ class ElementsKit_Widget_Team extends Widget_Base {
                 'label'      => esc_html__( 'Color', 'elementskit-lite' ),
                 'type'       => Controls_Manager::COLOR,
                 'selectors'  => [
-                    '{{WRAPPER}} .xs-modal-content .xs-modal-header .person-title' => 'color: {{VALUE}};'
+                    '{{WRAPPER}} .ekit-team-modal-title' => 'color: {{VALUE}};'
                 ],
             ]
         );
@@ -1828,7 +1746,7 @@ class ElementsKit_Widget_Team extends Widget_Base {
         $this->add_group_control(
             Group_Control_Typography::get_type(), [
                 'name'       => 'ekit_team_modal_name_typography',
-                'selector'   => '{{WRAPPER}} .xs-modal-content .xs-modal-header .person-title',
+                'selector'   => '{{WRAPPER}} .ekit-team-modal-title',
             ]
         );
 
@@ -1849,11 +1767,9 @@ class ElementsKit_Widget_Team extends Widget_Base {
                         'max' => 100,
                     ],
                 ],
-
                 'selectors' => [
-                    '{{WRAPPER}} .xs-modal-content .xs-modal-header .person-title' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .ekit-team-modal-title' => 'margin-bottom: {{SIZE}}{{UNIT}};',
                 ],
-                'separator' => 'before',
             ]
         );
 
@@ -1872,7 +1788,7 @@ class ElementsKit_Widget_Team extends Widget_Base {
                 'label'      => esc_html__( 'Color', 'elementskit-lite' ),
                 'type'       => Controls_Manager::COLOR,
                 'selectors'  => [
-                    '{{WRAPPER}} .xs-modal-content .xs-modal-header .perosn-designation' => 'color: {{VALUE}};'
+                    '{{WRAPPER}} .ekit-team-modal-position' => 'color: {{VALUE}};'
                 ],
             ]
         );
@@ -1880,9 +1796,10 @@ class ElementsKit_Widget_Team extends Widget_Base {
         $this->add_group_control(
             Group_Control_Typography::get_type(), [
                 'name'       => 'ekit_team_modal_position_typography',
-                'selector'   => '{{WRAPPER}} .xs-modal-content .xs-modal-header .perosn-designation',
+                'selector'   => '{{WRAPPER}} .ekit-team-modal-position',
             ]
         );
+
         $this->add_responsive_control(
             'ekit_team_modal_position_margin_bottom',
             [
@@ -1900,13 +1817,12 @@ class ElementsKit_Widget_Team extends Widget_Base {
                         'max' => 100,
                     ],
                 ],
-
                 'selectors' => [
-                    '{{WRAPPER}} .elementskit-team-sidebar .xs-modal-header' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .ekit-team-modal-position' => 'margin-bottom: {{SIZE}}{{UNIT}};',
                 ],
-                'separator' => 'before',
             ]
         );
+
         $this->add_control(
 			'more_options',
 			[
@@ -1920,8 +1836,7 @@ class ElementsKit_Widget_Team extends Widget_Base {
         $this->add_group_control(
             Group_Control_Typography::get_type(), [
                 'name'       => 'ekit_team_info_typography',
-                'selector'   => '{{WRAPPER}} .border-lists>li strong,
-                {{WRAPPER}} .xs-modal-content .border-lists li > a',
+                'selector'   => '{{WRAPPER}} .ekit-team-modal-list',
             ]
         );
 
@@ -1931,8 +1846,7 @@ class ElementsKit_Widget_Team extends Widget_Base {
                 'label'      => esc_html__( 'Color', 'elementskit-lite' ),
                 'type'       => Controls_Manager::COLOR,
                 'selectors'  => [
-                    '{{WRAPPER}} .border-lists>li strong,
-                    {{WRAPPER}} .xs-modal-content .border-lists li > a' => 'color: {{VALUE}};'
+                    '{{WRAPPER}} .ekit-team-modal-list' => 'color: {{VALUE}};'
                 ],
             ]
         );
@@ -1943,7 +1857,7 @@ class ElementsKit_Widget_Team extends Widget_Base {
                 'label'      => esc_html__( 'Color Hover', 'elementskit-lite' ),
                 'type'       => Controls_Manager::COLOR,
                 'selectors'  => [
-                    '{{WRAPPER}} .xs-modal-content .border-lists li > a:hover' => 'color: {{VALUE}};'
+                    '{{WRAPPER}} .ekit-team-modal-list a:hover' => 'color: {{VALUE}};'
                 ],
             ]
         );
@@ -1977,8 +1891,8 @@ class ElementsKit_Widget_Team extends Widget_Base {
                 'type' => Controls_Manager::COLOR,
                 'default' => '#656565',
                 'selectors' => [
-                    '{{WRAPPER}} .elementskit-team-popup .modal-content .modal-header span' => 'color: {{VALUE}};',
-                    '{{WRAPPER}} .elementskit-team-popup .modal-content .modal-header span svg path' => 'stroke: {{VALUE}}; fill: {{VALUE}};',
+                    '{{WRAPPER}} .ekit-team-modal-close' => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .ekit-team-modal-close svg path' => 'stroke: {{VALUE}}; fill: {{VALUE}};',
                 ],
             ]
         );
@@ -1990,7 +1904,7 @@ class ElementsKit_Widget_Team extends Widget_Base {
                 'type' => Controls_Manager::COLOR,
                 'default' => '',
                 'selectors' => [
-                    '{{WRAPPER}} .elementskit-team-popup .modal-content .modal-header span' => 'background-color: {{VALUE}};',
+                    '{{WRAPPER}} .ekit-team-modal-close' => 'background-color: {{VALUE}};',
                 ],
             ]
         );
@@ -2000,7 +1914,7 @@ class ElementsKit_Widget_Team extends Widget_Base {
             [
                 'name' => 'ekit_team_border',
                 'label' => esc_html__( 'Border', 'elementskit-lite' ),
-                'selector' => '{{WRAPPER}} .elementskit-team-popup .modal-content .modal-header span',
+                'selector' => '{{WRAPPER}} .ekit-team-modal-close',
             ]
         );
 
@@ -2013,7 +1927,7 @@ class ElementsKit_Widget_Team extends Widget_Base {
                 'type' => Controls_Manager::DIMENSIONS,
                 'size_units' => [ 'px', '%' ],
                 'selectors' => [
-                    '{{WRAPPER}} .elementskit-team-popup .modal-content .modal-header span' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .ekit-team-modal-close' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
@@ -2021,7 +1935,7 @@ class ElementsKit_Widget_Team extends Widget_Base {
             Group_Control_Box_Shadow::get_type(),
             [
                 'name' => 'ekit_icon_icon_box_shadow_normal_group',
-                'selector' => '{{WRAPPER}} .elementskit-team-popup .modal-content .modal-header span',
+                'selector' => '{{WRAPPER}} .ekit-team-modal-close',
             ]
         );
         $this->end_controls_tab();
@@ -2036,12 +1950,12 @@ class ElementsKit_Widget_Team extends Widget_Base {
         $this->add_control(
             'ekit_team_hover_primary_color',
             [
-                'label' => esc_html__( 'Icon Hover Color', 'elementskit-lite' ),
+                'label' => esc_html__( 'Icon Color (Hover)', 'elementskit-lite' ),
                 'type' => Controls_Manager::COLOR,
                 'default' => '',
                 'selectors' => [
-                    '{{WRAPPER}} .elementskit-team-popup .modal-content .modal-header span:hover' => 'color: {{VALUE}};',
-                    '{{WRAPPER}} .elementskit-team-popup .modal-content .modal-header span:hover svg path' => 'stroke: {{VALUE}}; fill: {{VALUE}};',
+                    '{{WRAPPER}} .ekit-team-modal-close:hover' => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .ekit-team-modal-close:hover svg path' => 'stroke: {{VALUE}}; fill: {{VALUE}};',
                 ],
             ]
         );
@@ -2049,11 +1963,11 @@ class ElementsKit_Widget_Team extends Widget_Base {
         $this->add_control(
             'ekit_team_hover_background_color',
             [
-                'label' => esc_html__( 'Background Color', 'elementskit-lite' ),
+                'label' => esc_html__( 'Icon BG Color (Hover)', 'elementskit-lite' ),
                 'type' => Controls_Manager::COLOR,
                 'default' => '',
                 'selectors' => [
-                    '{{WRAPPER}} .elementskit-team-popup .modal-content .modal-header span:hover' => 'background-color: {{VALUE}};',
+                    '{{WRAPPER}} .ekit-team-modal-close:hover' => 'background-color: {{VALUE}};',
                 ],
             ]
         );
@@ -2063,7 +1977,7 @@ class ElementsKit_Widget_Team extends Widget_Base {
             [
                 'name' => 'ekit_team_border_icon_group',
                 'label' => esc_html__( 'Border', 'elementskit-lite' ),
-                'selector' => '{{WRAPPER}} ..elementskit-team-popup .modal-content .modal-header span:hover',
+                'selector' => '{{WRAPPER}} .ekit-team-modal-close:hover',
             ]
         );
 
@@ -2074,7 +1988,7 @@ class ElementsKit_Widget_Team extends Widget_Base {
                 'type' => Controls_Manager::DIMENSIONS,
                 'size_units' => [ 'px', '%' ],
                 'selectors' => [
-                    '{{WRAPPER}} .elementskit-team-popup .modal-content .modal-header span:hover' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .ekit-team-modal-close:hover' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
@@ -2082,7 +1996,7 @@ class ElementsKit_Widget_Team extends Widget_Base {
             Group_Control_Box_Shadow::get_type(),
             [
                 'name' => 'ekit_team_shadow_group',
-                'selector' => '{{WRAPPER}} .elementskit-team-popup .modal-content .modal-header span:hover',
+                'selector' => '{{WRAPPER}} .ekit-team-modal-close:hover',
             ]
         );
         $this->end_controls_tab();
@@ -2091,7 +2005,7 @@ class ElementsKit_Widget_Team extends Widget_Base {
         $this->add_responsive_control(
             'ekit_team_close_icon_size',
             [
-                'label' => esc_html__( 'Size', 'elementskit-lite' ),
+                'label' => esc_html__( 'Font Size', 'elementskit-lite' ),
                 'type' => Controls_Manager::SLIDER,
                 'range' => [
                     'px' => [
@@ -2099,13 +2013,9 @@ class ElementsKit_Widget_Team extends Widget_Base {
                         'max' => 300,
                     ],
                 ],
-                'default' => [
-                    'size' => 40,
-                    'unit' => 'px',
-                ],
                 'selectors' => [
-                    '{{WRAPPER}} .elementskit-team-popup .modal-content .modal-header span' => 'font-size: {{SIZE}}{{UNIT}};',
-                    '{{WRAPPER}} .elementskit-team-popup .modal-content .modal-header span svg' => 'max-width: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .ekit-team-modal-close' => 'font-size: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .ekit-team-modal-close svg' => 'max-width: {{SIZE}}{{UNIT}};',
                 ],
                 'separator' => 'before',
             ]
@@ -2118,7 +2028,7 @@ class ElementsKit_Widget_Team extends Widget_Base {
                 'type' => Controls_Manager::DIMENSIONS,
                 'size_units' => [ 'px', '%', 'em' ],
                 'selectors' => [
-                    '{{WRAPPER}} .elementskit-team-popup .modal-content .modal-header span' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .ekit-team-modal-close' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
@@ -2126,33 +2036,12 @@ class ElementsKit_Widget_Team extends Widget_Base {
         $this->add_responsive_control(
             'ekit_team_close_icon_enable_height_width',
             [
-                'label' => esc_html__( 'Use height width', 'elementskit-lite' ),
+                'label' => esc_html__( 'Use Height Width', 'elementskit-lite' ),
                 'type' => Controls_Manager::SWITCHER,
                 'label_on' => esc_html__( 'Yes', 'elementskit-lite' ),
                 'label_off' => esc_html__( 'No', 'elementskit-lite' ),
                 'return_value' => 'yes',
                 'default' => '',
-            ]
-        );
-
-        $this->add_responsive_control(
-            'ekit_team_close_icon_height',
-            [
-                'label' => esc_html__( 'Height', 'elementskit-lite' ),
-                'type' => Controls_Manager::SLIDER,
-                'range' => [
-                    'px' => [
-                        'min' => 10,
-                        'max' => 200,
-                    ],
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .elementskit-team-popup .modal-content .modal-header span ' => 'height: {{SIZE}}{{UNIT}};',
-                ],
-                'condition' => [
-                    'ekit_team_close_icon_enable_height_width' => 'yes',
-                ],
-
             ]
         );
 
@@ -2168,13 +2057,31 @@ class ElementsKit_Widget_Team extends Widget_Base {
                     ],
                 ],
                 'selectors' => [
-                    '{{WRAPPER}} .elementskit-team-popup .modal-content .modal-header span' => 'width: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .ekit-team-modal-close' => 'width: {{SIZE}}{{UNIT}};',
                 ],
                 'condition' => [
                   'ekit_team_close_icon_enable_height_width' => 'yes',
               ],
+            ]
+        );
 
-
+        $this->add_responsive_control(
+            'ekit_team_close_icon_height',
+            [
+                'label' => esc_html__( 'Height', 'elementskit-lite' ),
+                'type' => Controls_Manager::SLIDER,
+                'range' => [
+                    'px' => [
+                        'min' => 10,
+                        'max' => 200,
+                    ],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .ekit-team-modal-close' => 'height: {{SIZE}}{{UNIT}};',
+                ],
+                'condition' => [
+                    'ekit_team_close_icon_enable_height_width' => 'yes',
+                ],
             ]
         );
 
@@ -2190,7 +2097,7 @@ class ElementsKit_Widget_Team extends Widget_Base {
                     ],
                 ],
                 'selectors' => [
-                    '{{WRAPPER}} .elementskit-team-popup .modal-content .modal-header span' => 'line-height: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .ekit-team-modal-close' => 'line-height: {{SIZE}}{{UNIT}};',
                 ],
                 'condition' => [
                     'ekit_team_close_icon_enable_height_width' => 'yes',
@@ -2226,464 +2133,233 @@ class ElementsKit_Widget_Team extends Widget_Base {
     }
 
     protected function render( ) {
-        echo '<div class="ekit-wid-con" >';
+        echo '<div class="ekit-wid-con">';
             $this->render_raw();
         echo '</div>';
     }
 
-    protected function render_raw( ) {
-        $settings = $this->get_settings_for_display();
+	protected function render_raw( ) {
+		$settings = $this->get_settings_for_display();
+		extract($settings);
 
-        // Image sectionn
-        $image_html = '';
-        if (!empty($settings['ekit_team_image']['url'])) {
+		// Image sectionn
+		$image_html = '';
+		if ( !empty($ekit_team_image['url']) ) {
+			$this->add_render_attribute('image', 'src', $ekit_team_image['url']);
+			$this->add_render_attribute('image', 'alt', Control_Media::get_image_alt($ekit_team_image));
+			$this->add_render_attribute('image', 'title', Control_Media::get_image_title($ekit_team_image));
 
-            $this->add_render_attribute('image', 'src', $settings['ekit_team_image']['url']);
-            $this->add_render_attribute('image', 'alt', Control_Media::get_image_alt($settings['ekit_team_image']));
-            $this->add_render_attribute('image', 'title', Control_Media::get_image_title($settings['ekit_team_image']));
+			$image_html = Group_Control_Image_Size::get_attachment_image_html($settings, 'ekit_team_thumbnail', 'ekit_team_image');
+		}
 
-            $image_html = Group_Control_Image_Size::get_attachment_image_html($settings, 'ekit_team_thumbnail', 'ekit_team_image');
+		$this->add_render_attribute(
+			'profile_card',
+			[
+				'class' => 'profile-card ' . $ekit_team_content_text_align,
+			]
+		);
 
+		// Social List
+        if ( $ekit_team_socail_enable === 'yes' ) {
+            foreach ($ekit_team_social_icons as $icon) {
+                // List Item
+                $this->add_render_attribute( 'social_item_' . $icon['_id'], 'class', 'elementor-repeater-item-' . $icon[ '_id' ] );
+    
+                // Link
+                $this->add_link_attributes( 'social_link_' . $icon['_id'], $icon['ekit_team_link'] );
+            }
         }
+		
+		if ( in_array($ekit_team_style, array('default', 'centered_style', 'centered_style_details', 'long_height_details', 'long_height_details_hover')) ):
+		?>
+		<?php if($ekit_team_style == 'centered_style'): ?> <div class="profile-square-v"> <?php endif; ?>
+		<?php if($ekit_team_style == 'centered_style_details'): ?> <div class="profile-square-v square-v5 no_gutters"> <?php endif; ?>
+		<?php if($ekit_team_style == 'long_height_details'): ?> <div class="profile-square-v square-v6 no_gutters"> <?php endif; ?>
+		<?php if($ekit_team_style == 'long_height_details_hover'): ?> <div class="profile-square-v square-v6 square-v6-v2 no_gutters"><?php endif; ?>
 
-        extract($settings);
+		<div <?php echo $this->get_render_attribute_string('profile_card'); ?>>
+			<?php if ($settings['ekit_team_chose_popup'] == 'yes') : ?>
+				<a href="#ekit_team_modal_<?php echo esc_attr($this->get_id()); ?>" class="ekit-team-popup">
+			<?php endif; ?>
+			
+				<div class="profile-header <?php echo esc_attr($ekit_team_style == 'default' ? 'ekit-img-overlay' : ''); ?>" <?php if ( (isset($settings['ekit_team_chose_popup']) ? $ekit_team_chose_popup : 'no')  == 'yes') :?> data-toggle="modal" data-target="ekit_team_modal_#<?php echo esc_attr($this->get_id()); ?>" <?php endif; ?>>
+					<?php echo \ElementsKit_Lite\Utils::kses($image_html); ?>
+				</div><!-- .profile-header END -->
+			<?php if ($settings['ekit_team_chose_popup'] == 'yes') : ?>
+				</a>
+			<?php endif; ?>
+			
 
-        $ekit_sidebar_direction = '';
-        if ($settings['ekit_team_chose_popup_style']== 'sidebar') {
-            $ekit_sidebar_direction = $settings['ekit_team_chose_sidebar_direction'];
-        }
+				<div class="profile-body">
+					<?php if ( 'default' == $ekit_team_style && 'yes' == $ekit_team_toggle_icon && !empty( $ekit_team_top_icons ) ): ?>
+					<div class="profile-icon">
 
+					<?php
+						// new icon
+						$migrated = isset( $settings['__fa4_migrated']['ekit_team_top_icons'] );
+						// Check if its a new widget without previously selected icon using the old Icon control
+						$is_new = empty( $settings['ekit_team_top_icon'] );
+						if ( $is_new || $migrated ) {
+							// new icon
+							Icons_Manager::render_icon( $settings['ekit_team_top_icons'], [ 'aria-hidden' => 'true' ] );
+						} else {
+							?>
+							<i class="<?php echo esc_attr($settings['ekit_team_top_icon']); ?>" aria-hidden="true"></i>
+							<?php
+						}
+					?>
+					</div>
+					<?php endif; ?>
 
-        ?>
-        <!-- This box for default design-->
-        <?php if ( in_array($ekit_team_style, array('default', 'centered_style', 'centered_style_details', 'long_height_details', 'long_height_details_hover'))): ?>
-            <?php if($ekit_team_style == 'centered_style'): ?> <div class="profile-square-v"> <?php endif; ?>
-            <?php if($ekit_team_style == 'centered_style_details'): ?> <div class="profile-square-v square-v5 no_gutters"> <?php endif; ?>
-            <?php if($ekit_team_style == 'long_height_details'): ?> <div class="profile-square-v square-v6 no_gutters"> <?php endif; ?>
-            <?php if($ekit_team_style == 'long_height_details_hover'): ?> <div class="profile-square-v square-v6 square-v6-v2 no_gutters"> <?php endif; ?>
-             <div class="profile-card <?php if(isset($ekit_team_content_text_align)) { echo esc_attr($ekit_team_content_text_align);} ?>">
+					<h2 class="profile-title">
+					<?php if ($settings['ekit_team_chose_popup'] == 'yes') : ?>
+						<a  href="#ekit_team_modal_<?php echo esc_attr($this->get_id()); ?>" class="ekit-team-popup">
+						<?php echo esc_html( $ekit_team_name ); ?>
+						</a>
+						<?php else: ?>
+						<?php echo esc_html( $ekit_team_name ); ?>
+					<?php endif; ?>
+					</h2>
+					<p class="profile-designation"><?php echo esc_html( $ekit_team_position ); ?></p>
+					<?php if($ekit_team_show_short_description == 'yes' && $ekit_team_short_description != ''): ?>
+					<p class="profile-content"><?php echo \ElementsKit_Lite\Utils::kses($ekit_team_short_description); ?></p>
+					<?php endif;?>
+				</div><!-- .profile-body END -->
 
-            <?php if ($settings['ekit_team_chose_popup'] == 'yes') : ?>
-                <a href="#ekit_team_modal_<?php echo esc_attr($this->get_id()); ?>" class="ekit-team-popup">
-            <?php endif; ?>
-            
-                <div class="profile-header <?php echo esc_attr($ekit_team_style == 'default' ? 'ekit-img-overlay' : ''); ?>" <?php if ( (isset($settings['ekit_team_chose_popup']) ? $ekit_team_chose_popup : 'no')  == 'yes') :?> data-toggle="modal" data-target="ekit_team_modal_#<?php echo esc_attr($this->get_id()); ?>" <?php endif; ?>>
-                    <?php echo \ElementsKit_Lite\Utils::kses($image_html); ?>
-                </div><!-- .profile-header END -->
-            <?php if ($settings['ekit_team_chose_popup'] == 'yes') : ?>
-                </a>
-            <?php endif; ?>
-            
+				<?php if(isset($ekit_team_socail_enable) AND $ekit_team_socail_enable == 'yes'){?>
+					<div class="profile-footer">
+						<?php require Handler::get_dir() . 'parts/social-list.php'; ?>
+					</div>
+					<?php
+					}
+					?>
+				</div>
+				<?php if(in_array($ekit_team_style, array('centered_style', 'centered_style_details', 'long_height_details', 'long_height_details_hover')) ): ?> </div> <?php endif; ?>
+			<?php endif; ?>
 
-                <div class="profile-body">
-                    <?php if ( 'default' == $ekit_team_style && 'yes' == $ekit_team_toggle_icon && !empty( $ekit_team_top_icons ) ): ?>
-                    <div class="profile-icon">
+			<?php if ( in_array($ekit_team_style, array('overlay', 'overlay_details', 'long_height_hover', 'overlay_circle', 'overlay_circle_hover')) ): ?>
+				<?php if($ekit_team_style == 'overlay_details'): ?> <div class="image-card-v2"> <?php endif; ?>
+				<?php if($ekit_team_style == 'long_height_hover'): ?> <div class="<?php echo esc_attr($settings['ekit_team_remove_gutters'] == 'yes' ? '' : 'small-gutters'); ?> image-card-v3"> <?php endif; ?>
+				<?php if($ekit_team_style == 'overlay_circle'): ?> <div class="style-circle"> <?php endif; ?>
+				<?php if($ekit_team_style == 'overlay_circle_hover'): ?> <div class="image-card-v2 style-circle"> <?php endif; ?>
+					<div class="profile-image-card <?php if(isset($ekit_team_content_text_align)) { echo esc_attr($ekit_team_content_text_align);} ?>">
 
-                    <?php
-                        // new icon
-                        $migrated = isset( $settings['__fa4_migrated']['ekit_team_top_icons'] );
-                        // Check if its a new widget without previously selected icon using the old Icon control
-                        $is_new = empty( $settings['ekit_team_top_icon'] );
-                        if ( $is_new || $migrated ) {
-                            // new icon
-                            Icons_Manager::render_icon( $settings['ekit_team_top_icons'], [ 'aria-hidden' => 'true' ] );
-                        } else {
-                            ?>
-                            <i class="<?php echo esc_attr($settings['ekit_team_top_icon']); ?>" aria-hidden="true"></i>
-                            <?php
-                        }
-                    ?>
-                    </div>
-                    <?php endif; ?>
+						<?php if($ekit_team_style == 'long_height_hover'){ ?>
+							<?php echo \ElementsKit_Lite\Utils::kses($image_html); ?>
+						<?php
+							$modalClass = 'team-sidebar_'.$ekit_team_style.'';
+						}else{
+							$modalClass = 'team-modal_'.$ekit_team_style.'';
+						?>
+							<?php echo \ElementsKit_Lite\Utils::kses($image_html); ?>
+						<?php }?>
+						<div class="hover-area">
+							<div class="profile-body">
+								<h2 class="profile-title">
+								<?php if ($settings['ekit_team_chose_popup'] == 'yes') : ?>
+									<a  href="#ekit_team_modal_<?php echo esc_attr($this->get_id()); ?>" class="ekit-team-popup">
+									<?php echo esc_html( $ekit_team_name ); ?>
+									</a>
+									<?php else: ?>
+									<?php echo esc_html( $ekit_team_name ); ?>
+								<?php endif; ?>
+								</h2>
+								<p class="profile-designation"><?php echo esc_html( $ekit_team_position ); ?></p>
+								<?php if($ekit_team_show_short_description == 'yes' && $ekit_team_short_description != ''): ?>
+								<p class="profile-content"><?php echo \ElementsKit_Lite\Utils::kses($ekit_team_short_description); ?></p>
+								<?php endif;?>
+							</div>
+							<?php if(isset($ekit_team_socail_enable) && $ekit_team_socail_enable == 'yes'){?>
+								<div class="profile-footer">
+									<?php require Handler::get_dir() . 'parts/social-list.php'; ?>
+								</div>
+							<?php
+							}
+							?>
+						</div>
+					</div>
+					<?php if(in_array($ekit_team_style, array('overlay_details', 'long_height_hover' , 'overlay_circle', 'overlay_circle_hover')) ): ?> </div> <?php endif; ?>
 
-                    <h2 class="profile-title">
-                    <?php if ($settings['ekit_team_chose_popup'] == 'yes') : ?>
-                        <a  href="#ekit_team_modal_<?php echo esc_attr($this->get_id()); ?>" class="ekit-team-popup">
-                        <?php echo esc_html( $ekit_team_name ); ?>
-                        </a>
-                        <?php else: ?>
-                        <?php echo esc_html( $ekit_team_name ); ?>
-                    <?php endif; ?>
-                    </h2>
-                    <p class="profile-designation"><?php echo esc_html( $ekit_team_position ); ?></p>
-                    <?php if($ekit_team_show_short_description == 'yes' && $ekit_team_short_description != ''): ?>
-                    <p class="profile-content"><?php echo \ElementsKit_Lite\Utils::kses($ekit_team_short_description); ?></p>
-                    <?php endif;?>
-                </div><!-- .profile-body END -->
+				<?php
+				endif;
+				if ( 'hover_info' == $ekit_team_style ):
+				?>
+				
+				<div class="profile-square-v square-v4">
+					<div class="profile-card <?php if(isset($ekit_team_content_text_align)) { echo esc_attr($ekit_team_content_text_align);} ?>">
+						<div class="profile-header" <?php if ($settings['ekit_team_chose_popup'] == 'yes') :?> data-toggle="modal" data-target="#ekit_team_modal_<?php echo esc_attr($this->get_id()); ?>" <?php endif; ?>>
+							<?php echo \ElementsKit_Lite\Utils::kses($image_html); ?>
+						</div><!-- .profile-header END -->
+						<div class="profile-body">
+							<h2 class="profile-title">
+							<?php if ($settings['ekit_team_chose_popup'] == 'yes') : ?>
+								<a  href="#ekit_team_modal_<?php echo esc_attr($this->get_id()); ?>" class="ekit-team-popup">
+								<?php echo esc_html( $ekit_team_name ); ?>
+								</a>
+								<?php else: ?>
+								<?php echo esc_html( $ekit_team_name ); ?>
+							<?php endif; ?>
+							</h2>
+							<p class="profile-designation"><?php echo esc_html( $ekit_team_position ); ?></p>
+							<?php if($ekit_team_show_short_description == 'yes' && $ekit_team_short_description != ''): ?>
+							<p class="profile-content"><?php echo \ElementsKit_Lite\Utils::kses($ekit_team_short_description); ?></p>
+							<?php endif;?>
+							<?php
+								if ( isset($ekit_team_socail_enable) AND $ekit_team_socail_enable == 'yes' ) {
+									require Handler::get_dir() . 'parts/social-list.php';
+								}
+							?>
+						</div>
+					</div>
+				</div>
+			<?php endif; ?>
 
-                <?php if(isset($ekit_team_socail_enable) AND $ekit_team_socail_enable == 'yes'){?>
-                    <div class="profile-footer">
-                        <ul class="ekit-team-social-list ">
-                        <?php foreach ($ekit_team_social_icons as $key => $icon): 
-                            if ( ! empty( $icon['ekit_team_link']['url'] ) ) {
-                                $this->add_link_attributes( 'button-' . $key, $icon['ekit_team_link'] );
-                            }
-                        ?>
-                                <li class="elementor-repeater-item-<?php echo esc_attr( $icon[ '_id' ] ); ?>"><a
-                                    <?php
+		<?php if ( $ekit_team_chose_popup == 'yes' ): ?>
+			<div class="zoom-anim-dialog mfp-hide elementskit-team-popup" id="ekit_team_modal_<?php echo esc_attr($this->get_id()); ?>" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered" role="document">
+					<div class="modal-content">
+						<button type="button" class="ekit-team-modal-close">
+							<?php Icons_Manager::render_icon( $ekit_team_close_icon_changes, ['aria-hidden' => 'true'] ); ?>
+						</button>
 
-                                    echo $this->get_render_attribute_string( 'button-' . $key );
+						<div class="modal-body">
+							<?php if ( !empty($image_html) ) { ?>
+								<div class="ekit-team-modal-img">
+									<?php echo \ElementsKit_Lite\Utils::kses($image_html); ?>
+								</div>
+							<?php } ?>
 
-                                    // new icon
-                                    $migrated = isset( $icon['__fa4_migrated']['ekit_team_icons'] );
-                                    // Check if its a new widget without previously selected icon using the old Icon control
-                                    $is_new = empty( $icon['ekit_team_icon'] );
+							<div class="ekit-team-modal-info<?php echo !empty($image_html) ? ' has-img' : ''; ?>">
+								<h2 class="ekit-team-modal-title"><?php echo esc_html( $ekit_team_name ); ?></h2>
+								<p class="ekit-team-modal-position"><?php echo esc_html( $ekit_team_position ); ?></p>
+								
+								<div class="ekit-team-modal-content">
+									<?php echo \ElementsKit_Lite\Utils::kses($ekit_team_description); ?>
+								</div>
 
-                                    $getClass = explode('-', ($is_new || $migrated) ? $icon['ekit_team_icons']['library'] != 'svg' ? $icon['ekit_team_icons']['value'] : '' : $icon['ekit_team_icon']);
-                                     $iconClass = end($getClass);
-                                  ?> class="<?php echo esc_attr( $iconClass ); ?>" >
-                                    <?php
-                                        if ( $is_new || $migrated ) {
-                                            // new icon
-                                            Icons_Manager::render_icon( $icon['ekit_team_icons'], [ 'aria-hidden' => 'true' ] );
-                                        } else {
-                                            ?>
-                                            <i class="<?php echo esc_attr($icon['ekit_team_icon']); ?>" aria-hidden="true"></i>
-                                            <?php
-                                        }
-                                    ?>  
-                                </a></li>
-                            <?php endforeach; ?>
-                        </ul>
-                    </div><!-- .profile-footer END -->
-                    <?php
-                    }
-                    ?>
-                </div><!-- .profile-card END -->
-                <?php if(in_array($ekit_team_style, array('centered_style', 'centered_style_details', 'long_height_details', 'long_height_details_hover')) ): ?> </div> <?php endif; ?>
-            <?php endif; ?>
-            <!-- This box for overlay design-->
+								<?php if ( $ekit_team_phone || $ekit_team_email ) { ?>
+									<ul class="ekit-team-modal-list">
+										<?php if ( $ekit_team_phone ): ?>
+											<li><strong><?php esc_html_e( 'Phone', 'elementskit-lite' ); ?>:</strong><a href="tel:<?php echo esc_attr( urlencode($ekit_team_phone) ); ?>"><?php echo esc_html( $ekit_team_phone ); ?></a></li>
+										<?php endif; ?>
 
-            <?php if ( in_array($ekit_team_style, array('overlay', 'overlay_details', 'long_height_hover', 'overlay_circle', 'overlay_circle_hover')) ): ?>
-                <?php if($ekit_team_style == 'overlay_details'): ?> <div class="image-card-v2"> <?php endif; ?>
-                <?php if($ekit_team_style == 'long_height_hover'): ?> <div class="<?php echo esc_attr($settings['ekit_team_remove_gutters'] == 'yes' ? '' : 'small-gutters'); ?> image-card-v3"> <?php endif; ?>
-                <?php if($ekit_team_style == 'overlay_circle'): ?> <div class="style-circle"> <?php endif; ?>
-                <?php if($ekit_team_style == 'overlay_circle_hover'): ?> <div class="image-card-v2 style-circle"> <?php endif; ?>
-                    <div class="profile-image-card <?php if(isset($ekit_team_content_text_align)) { echo esc_attr($ekit_team_content_text_align);} ?>">
-
-                        <?php if($ekit_team_style == 'long_height_hover'){ ?>
-                            <?php echo \ElementsKit_Lite\Utils::kses($image_html); ?>
-                        <?php
-                            $modalClass = 'team-sidebar_'.$ekit_team_style.'';
-                        }else{
-                            $modalClass = 'team-modal_'.$ekit_team_style.'';
-                        ?>
-                            <?php echo \ElementsKit_Lite\Utils::kses($image_html); ?>
-                        <?php }?>
-                        <div class="hover-area">
-                            <div class="profile-body">
-                                <h2 class="profile-title">
-                                <?php if ($settings['ekit_team_chose_popup'] == 'yes') : ?>
-                                    <a  href="#ekit_team_modal_<?php echo esc_attr($this->get_id()); ?>" class="ekit-team-popup">
-                                    <?php echo esc_html( $ekit_team_name ); ?>
-                                    </a>
-                                    <?php else: ?>
-                                    <?php echo esc_html( $ekit_team_name ); ?>
-                                <?php endif; ?>
-                                </h2>
-                                <p class="profile-designation"><?php echo esc_html( $ekit_team_position ); ?></p>
-                                <?php if($ekit_team_show_short_description == 'yes' && $ekit_team_short_description != ''): ?>
-                                <p class="profile-content"><?php echo \ElementsKit_Lite\Utils::kses($ekit_team_short_description); ?></p>
-                                <?php endif;?>
-                            </div><!-- .profile-body END -->
-                            <?php if(isset($ekit_team_socail_enable) && $ekit_team_socail_enable == 'yes'){?>
-                                <div class="profile-footer">
-                                    <ul class="ekit-team-social-list  ">
-                                        <?php foreach ($ekit_team_social_icons as $icon): ?>
-                                            <li class="elementor-repeater-item-<?php echo esc_attr( $icon[ '_id' ] ); ?>"><a
-                                                <?php if ( 'on' == $icon['ekit_team_link']['is_external'] ): ?>
-                                                    target="_blank"
-                                                <?php endif; ?>
-                                                <?php if ( 'on' == $icon['ekit_team_link']['nofollow'] ): ?>
-                                                    rel="nofollow"
-                                                <?php endif;
-                                                // new icon
-                                                $migrated = isset( $icon['__fa4_migrated']['ekit_team_icons'] );
-                                                // Check if its a new widget without previously selected icon using the old Icon control
-                                                $is_new = empty( $icon['ekit_team_icon'] );
-
-                                                $getClass = explode('-', ($is_new || $migrated) ? (!empty($icon['ekit_team_icons']) && $icon['ekit_team_icons']['library'] != 'svg' ? $icon['ekit_team_icons']['value'] : '') : $icon['ekit_team_icon']);
-                                                $iconClass = end($getClass);
-                                              ?> class="<?php echo esc_attr( $iconClass ); ?>" >
-                                                    <?php
-                                                        if ( $is_new || $migrated ) {
-                                                            // new icon
-                                                            Icons_Manager::render_icon( $icon['ekit_team_icons'], [ 'aria-hidden' => 'true' ] );
-                                                        } else {
-                                                            ?>
-                                                            <i class="<?php echo esc_attr($icon['ekit_team_icon']); ?>" aria-hidden="true"></i>
-                                                            <?php
-                                                        }
-                                                    ?>   
-                                            </a></li>
-                                        <?php endforeach; ?>
-                                    </ul>
-                                </div><!-- .profile-footer END -->
-                            <?php
-                            }
-                            ?>
-                        </div>
-                    </div><!-- .profile-image-card END -->
-                    <?php if(in_array($ekit_team_style, array('overlay_details', 'long_height_hover' , 'overlay_circle', 'overlay_circle_hover')) ): ?> </div> <?php endif; ?>
-
-                <?php
-                endif;
-                if ( 'hover_info' == $ekit_team_style ):
-                ?>
-                <!-- This box for overlay design-->
-                <div class="profile-square-v square-v4">
-                    <div class="profile-card <?php if(isset($ekit_team_content_text_align)) { echo esc_attr($ekit_team_content_text_align);} ?>">
-                        <div class="profile-header" <?php if ($settings['ekit_team_chose_popup'] == 'yes') :?> data-toggle="modal" data-target="#ekit_team_modal_<?php echo esc_attr($this->get_id()); ?>" <?php endif; ?>>
-                            <?php echo \ElementsKit_Lite\Utils::kses($image_html); ?>
-                        </div><!-- .profile-header END -->
-                        <div class="profile-body">
-                            <h2 class="profile-title">
-                            <?php if ($settings['ekit_team_chose_popup'] == 'yes') : ?>
-                                <a  href="#ekit_team_modal_<?php echo esc_attr($this->get_id()); ?>" class="ekit-team-popup">
-                                <?php echo esc_html( $ekit_team_name ); ?>
-                                </a>
-                                <?php else: ?>
-                                <?php echo esc_html( $ekit_team_name ); ?>
-                            <?php endif; ?>
-                            </h2>
-                            <p class="profile-designation"><?php echo esc_html( $ekit_team_position ); ?></p>
-                            <?php if($ekit_team_show_short_description == 'yes' && $ekit_team_short_description != ''): ?>
-                            <p class="profile-content"><?php echo \ElementsKit_Lite\Utils::kses($ekit_team_short_description); ?></p>
-                            <?php endif;?>
-                            <?php if(isset($ekit_team_socail_enable) AND $ekit_team_socail_enable == 'yes'){?>
-                                <ul class="ekit-team-social-list ">
-                                    <?php foreach ($ekit_team_social_icons as $icon): ?>
-                                        <li class="elementor-repeater-item-<?php echo esc_attr( $icon[ '_id' ] ); ?>"><a
-                                            <?php if ( 'on' == $icon['ekit_team_link']['is_external'] ): ?>
-                                                target="_blank"
-                                            <?php endif; ?>
-                                            <?php if ( 'on' == $icon['ekit_team_link']['nofollow'] ): ?>
-                                                rel="nofollow"
-                                            <?php endif;
-                                            // new icon
-                                            $migrated = isset( $icon['__fa4_migrated']['ekit_team_icons'] );
-                                            // Check if its a new widget without previously selected icon using the old Icon control
-                                            $is_new = empty( $icon['ekit_team_icon'] );
-
-                                            $getClass = explode('-', ($is_new || $migrated) ?  (!empty($icon['ekit_team_icons']) && $icon['ekit_team_icons']['library'] != 'svg' ?  $icon['ekit_team_icons']['value'] : '') : $icon['ekit_team_icon']);
-                                             $iconClass = end($getClass);
-                                            ?> class="<?php echo esc_attr( $iconClass ); ?>" >
-                                                <?php
-                                                    if ( $is_new || $migrated ) {
-                                                        // new icon
-                                                        Icons_Manager::render_icon( $icon['ekit_team_icons'], [ 'aria-hidden' => 'true' ] );
-                                                    } else {
-                                                        ?>
-                                                        <i class="<?php echo esc_attr($icon['ekit_team_icon']); ?>" aria-hidden="true"></i>
-                                                        <?php
-                                                    }
-                                                ?> 
-                                            </a>
-                                        </li>
-                                    <?php endforeach; ?>
-                                </ul>
-                            <?php
-                            }
-                            ?>
-                        </div><!-- .profile-body END -->
-                    </div><!-- .profile-card END -->
-                </div>
-            <?php endif; ?>
-
-        <!-- start team modal Style -->
-        <?php if ((isset($settings['ekit_team_chose_popup']) ? $ekit_team_chose_popup : 'no') == 'yes') : ?>
-        <?php if ($settings['ekit_team_chose_popup_style'] == 'popup') : ?>
-        <div class="zoom-anim-dialog mfp-hide elementskit-team-popup" id="ekit_team_modal_<?php echo esc_attr($this->get_id()); ?>" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header <?php echo esc_attr($ekit_team_close_icon_alignment); ?>">
-                        <?php if($ekit_team_close_icon_changes != '') :  ?>
-
-
-                        <span class="ekit-modal-close">
-                            <?php
-                            // var_dump($settings['ekit_accordion_right_icons']);
-                                // new icon
-                                $migrated = isset( $settings['__fa4_migrated']['ekit_team_close_icon_changes'] );
-                                // Check if its a new widget without previously selected icon using the old Icon control
-                                $is_new = empty( $settings['ekit_team_close_icon_change'] );
-                                if ( $is_new || $migrated ) {
-                                    // new icon
-                                    Icons_Manager::render_icon( $settings['ekit_team_close_icon_changes'], [ 'aria-hidden' => 'true' ] );
-                                } else {
-                                    ?>
-                                    <i class="<?php echo esc_attr($settings['ekit_team_close_icon_change']); ?>" aria-hidden="true"></i>
-                                    <?php
-                                }
-                            ?>
-                        </span>
-
-                            
-
-                        <?php else:  ?>
-                        <span aria-hidden="true">&times;</span>
-                        <?php endif; ?>
-
-                    </div>
-                    <div class="modal-body">
-                        <div class="modal_image_wraper">
-                            <div class="modal-img">
-                            <?php echo \ElementsKit_Lite\Utils::kses($image_html); ?>
-                            </div>
-                        </div>
-                        <div class="modal_content_wraper">
-                            <div class="xs-modal-content">
-                                <div class="xs-modal-header">
-                                    <h2 class="person-title"><?php echo esc_html( $ekit_team_name ); ?></h2>
-                                    <span class="perosn-designation"><?php echo esc_html( $ekit_team_position ); ?></span>
-                                </div><!-- .xs-modal-header END -->
-								<div class="xs-modal-body">
-                                    <?php echo \ElementsKit_Lite\Utils::kses($ekit_team_description); ?>
-                                </div><!-- .xs-modal-body END -->
-                                <div class="xs-modal-footer">
-                                    <?php if ( $ekit_team_phone || $ekit_team_email ): ?>
-                                        <ul class="border-lists">
-                                            <?php if ( $ekit_team_phone ): ?>
-                                                <li><strong><?php esc_html_e( 'Phone', 'elementskit-lite' ); ?>:</strong><a href="tel:<?php echo esc_attr( urlencode($ekit_team_phone) ); ?>"><?php echo esc_html( $ekit_team_phone ); ?></a></li>
-                                            <?php endif; ?>
-
-                                            <?php if ( $ekit_team_email ): ?>
-                                                <li><strong><?php esc_html_e( 'Email', 'elementskit-lite' ); ?>:</strong><a href="mailto:<?php echo esc_attr( $ekit_team_email ); ?>"><?php echo esc_html( $ekit_team_email ); ?></a></li>
-                                            <?php endif; ?>
-                                        </ul>
-                                    <?php endif; ?>
-                                    <?php if(isset($ekit_team_socail_enable) AND $ekit_team_socail_enable == 'yes'){?>
-                                    <ul class="ekit-team-social-list ">
-                                        <?php foreach ($ekit_team_social_icons as $icon): ?>
-                                            <li class="elementor-repeater-item-<?php echo esc_attr( $icon[ '_id' ] ); ?>"><a
-                                                <?php if ( 'on' == $icon['ekit_team_link']['is_external'] ): ?>
-                                                    target="_blank"
-                                                <?php endif; ?>
-                                                <?php if ( 'on' == $icon['ekit_team_link']['nofollow'] ): ?>
-                                                    rel="nofollow"
-                                                <?php endif; ?>
-
-                                                href="<?php echo esc_url( $icon['ekit_team_link']['url'] ); ?>" class="social-icons elementor-social-icon-facebook">
-                                                <?php
-                                                    // new icon
-                                                    $migrated = isset( $icon['__fa4_migrated']['ekit_team_icons'] );
-                                                    // Check if its a new widget without previously selected icon using the old Icon control
-                                                    $is_new = empty( $icon['ekit_team_icon'] );
-                                                    if ( $is_new || $migrated ) {
-                                                        // new icon
-                                                        Icons_Manager::render_icon( $icon['ekit_team_icons'], [ 'aria-hidden' => 'true' ] );
-                                                    } else {
-                                                        ?>
-                                                        <i class="<?php echo esc_attr($icon['ekit_team_icon']); ?>" aria-hidden="true"></i>
-                                                        <?php
-                                                    }
-                                                ?> 
-                                            </a></li>
-                                        <?php endforeach; ?>
-                                    </ul>
-                                    <?php
-                                    }
-                                    ?>
-                                </div><!-- .xs-modal-footer END -->
-                            </div><!-- .xs-modal-content END -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <?php else : ?>
-        <div class="modal fade elementskit-team-sidebar <?php echo esc_attr($ekit_sidebar_direction); ?>" id="ekit_team_modal_<?php echo esc_attr($this->get_id()); ?>" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog elementskit-modal-dialog" role="document">
-                <div class="elementskit-modal-content">
-                    <div class="elementskit-modal-header <?php echo esc_attr($ekit_team_close_icon_alignment); ?>">
-                        <button type="button" class="close <?php echo esc_attr($ekit_team_close_icon_alignment); ?>" data-dismiss="modal" aria-label="Close">
-                            <?php if($ekit_team_close_icon_changes != '') :  ?>
-
-                            <?php
-                                // new icon
-                                $migrated = isset( $settings['__fa4_migrated']['ekit_team_close_icon_changes'] );
-                                // Check if its a new widget without previously selected icon using the old Icon control
-                                $is_new = empty( $settings['ekit_team_close_icon_change'] );
-                                
-                                if($is_new || $migrated){
-                                    echo '<span aria-hidden="true" class="mfp-close '. esc_attr($settings['ekit_team_close_icon_changes']['value']) .'"></span>';
-                                } else {
-                                    echo '<span aria-hidden="true" class="mfp-close '. esc_attr($settings['ekit_team_close_icon_change']) .'"></span>';
-                                }
-                            ?>
-                               
-                            <?php else:  ?>
-                                <span aria-hidden="true">&times;</span>
-                            <?php endif; ?>
-                        </button>
-                    </div>
-                    <div class="elementskitmodal-body">
-                        <div class="modal_image_wraper">
-                            <div class="modal-img">
-                            <?php echo \ElementsKit_Lite\Utils::kses($image_html); ?>
-                            </div>
-                        </div>
-                        <div class="modal_content_wraper">
-                            <div class="xs-modal-content">
-                                <div class="xs-modal-header">
-                                    <h2 class="person-title"><?php echo esc_html( $ekit_team_name ); ?></h2>
-                                    <span class="perosn-designation"><?php echo esc_html( $ekit_team_position ); ?></span>
-                                </div><!-- .xs-modal-header END -->
-                                <div class="xs-modal-body">
-                                    <?php echo \ElementsKit_Lite\Utils::kses($ekit_team_description); ?>
-                                </div><!-- .xs-modal-body END -->
-                                <div class="xs-modal-footer">
-                                    <?php if ( $ekit_team_phone || $ekit_team_email ): ?>
-                                        <ul class="border-lists">
-                                            <?php if ( $ekit_team_phone ): ?>
-                                                <li><strong><?php esc_html_e( 'Phone', 'elementskit-lite' ); ?>:</strong><a href="tel:<?php echo esc_attr( urldecode($ekit_team_phone) ); ?>"><?php echo esc_html( $ekit_team_phone ); ?></a></li>
-                                            <?php endif; ?>
-
-                                            <?php if ( $ekit_team_email ): ?>
-                                                <li><strong><?php esc_html_e( 'Email', 'elementskit-lite' ); ?>:</strong><a href="mailto:<?php echo esc_attr( $ekit_team_email ); ?>"><?php echo esc_html( $ekit_team_email ); ?></a></li>
-                                            <?php endif; ?>
-                                        </ul>
-                                    <?php endif; ?>
-                                    <?php if(isset($ekit_team_socail_enable) AND $ekit_team_socail_enable == 'yes'){?>
-                                    <ul class="ekit-team-social-list ">
-                                        <?php foreach ($ekit_team_social_icons as $icon): ?>
-                                            <li class="elementor-repeater-item-<?php echo esc_attr( $icon[ '_id' ] ); ?>"><a
-                                                <?php if ( 'on' == $icon['ekit_team_link']['is_external'] ): ?>
-                                                    target="_blank"
-                                                <?php endif; ?>
-                                                <?php if ( 'on' == $icon['ekit_team_link']['nofollow'] ): ?>
-                                                    rel="nofollow"
-                                                <?php endif; ?>
-
-                                                href="<?php echo esc_url( $icon['ekit_team_link']['url'] ); ?>" class="social-icons elementor-social-icon-facebook">
-                                                <?php
-                                                    if ( $is_new || $migrated ) {
-                                                        // new icon
-                                                        Icons_Manager::render_icon( $icon['ekit_team_icons'], [ 'aria-hidden' => 'true' ] );
-                                                    } else {
-                                                        ?>
-                                                        <i class="<?php echo esc_attr($icon['ekit_team_icon']); ?>" aria-hidden="true"></i>
-                                                        <?php
-                                                    }
-                                                ?> 
-                                                </a></li>
-                                        <?php endforeach; ?>
-                                    </ul>
-                                    <?php
-                                    }
-                                    ?>
-                                </div><!-- .xs-modal-footer END -->
-                            </div><!-- .xs-modal-content END -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <?php endif; ?>
-        <?php endif; ?>
-
-        <?php
-    }
-
-    protected function _content_template() { }
+										<?php if ( $ekit_team_email ): ?>
+											<li><strong><?php esc_html_e( 'Email', 'elementskit-lite' ); ?>:</strong><a href="mailto:<?php echo esc_attr( $ekit_team_email ); ?>"><?php echo esc_html( $ekit_team_email ); ?></a></li>
+										<?php endif; ?>
+									</ul>
+								<?php } ?>
+								
+								<?php
+									if ( isset($ekit_team_socail_enable) AND $ekit_team_socail_enable == 'yes' ) {
+										require Handler::get_dir() . 'parts/social-list.php';
+									}
+								?>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		<?php endif; ?>
+		<?php
+	}
 }

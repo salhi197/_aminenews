@@ -97,7 +97,7 @@ class ElementsKit_Widget_Funfact extends Widget_Base {
 				'fa4compatibility' => 'ekit_funfact_icon',
 				'default'          => [
 					'value'   => 'fab fa-amazon',
-					'library' => 'brands',
+					'library' => 'fa-brands',
 				],
 				'condition'        => [
 					'ekit_funfact_icon_type'     => 'icon',
@@ -1053,15 +1053,6 @@ class ElementsKit_Widget_Funfact extends Widget_Base {
 				'selectors'  => [
 					'{{WRAPPER}} .elementskit-funfact' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
-			]
-		);
-
-		$this->add_control(
-			'ekit_funfact_box_ainmation',
-			[
-				'label'        => esc_html__('Entrance Animation', 'elementskit-lite'),
-				'type'         => Controls_Manager::ANIMATION,
-				'prefix_class' => 'animated ',
 			]
 		);
 

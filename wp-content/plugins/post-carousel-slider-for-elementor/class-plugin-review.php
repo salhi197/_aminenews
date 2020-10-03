@@ -35,18 +35,20 @@
 		// delete_transient($this->transient_name);
 		$current_time = current_time('timestamp');
 		$first_active_time = $this->installed_time;
-		$next_review_time = strtotime('+7 days', $first_active_time);
+		$next_review_time = strtotime('+10 days', $first_active_time);
 		// echo $next_review_time;die();
 
 		if( ($review_transient  != 'reviewed') && ( isset($next_review_time) && ($next_review_time > 0) && ($current_time > $next_review_time) ) ){
 	?>
 			<div class="notice notice-error">
-				<p class="wb-ps-font-16">Can you please let us know your thoughts about <strong><?php esc_html_e($this->plugin_name); ?></strong>, so that we can improve it</p>
+				<p class="wb-ps-font-16">Hello! Seems like you've been using <strong><?php esc_html_e($this->plugin_name); ?></strong> for a long time.</p>
+				<p class="wb-ps-font-16">Could you please do us a BIG favor and give it a <a target="_blank" href="<?php echo esc_url( $this->review_url ); ?>">5-star rating</a> on WordPress? This would boost our motivation and help other users make a comfortable decision while choosing the <strong><?php esc_html_e($this->plugin_name); ?></strong> Plugin</p>
 				<p>
 					<a class="wb-ps-color-red wb-ps-extra-bold wb-ps-font-16 text-decoration-none button button-primary" target="_blank" href="<?php echo esc_url( $this->review_url ); ?>">Sure! I'd like to Review</a>
 					<!-- <span  class="wb-ps-color-blue wb-ps-font-16 wb-ps-mx-10">|</span> -->
 					<a style="margin-left: 5px;"  class="wb-ps-already-reviewed wb-ps-bold text-decoration-none" href="#">Already Reviewed</a>
 				</p>
+
 			</div>
 	<?php
 		}

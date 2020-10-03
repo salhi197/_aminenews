@@ -101,7 +101,7 @@ class ElementsKit_Widget_Header_Offcanvas extends Widget_Base
                     'fa4compatibility' => 'ekit_offcanvas_menu_close_icon',
                     'default' => [
                         'value' => 'fas fa-times',
-                        'library' => 'solid',
+                        'library' => 'fa-solid',
                     ],
                 ]
             );
@@ -201,7 +201,7 @@ class ElementsKit_Widget_Header_Offcanvas extends Widget_Base
             $this->add_responsive_control(
                 'ekit_offcanvas_icon_font_size',
                 [
-                    'label'         => esc_html__('Font Size', 'elementskit-lite'),
+                    'label'         => esc_html__('Icon Size', 'elementskit-lite'),
                     'type'          => Controls_Manager::SLIDER,
                     'size_units'    => ['px', 'em'],
                     'separator' => 'before',
@@ -396,7 +396,7 @@ class ElementsKit_Widget_Header_Offcanvas extends Widget_Base
             $this->add_responsive_control(
                 'ekit_offcanvas_close_icon_font_size',
                 [
-                    'label'         => esc_html__('Font Size', 'elementskit-lite'),
+                    'label'         => esc_html__('Icon Size', 'elementskit-lite'),
                     'type'          => Controls_Manager::SLIDER,
                     'size_units'    => ['px', 'em'],
                     'separator' => 'before',
@@ -409,6 +409,17 @@ class ElementsKit_Widget_Header_Offcanvas extends Widget_Base
                         '{{WRAPPER}} .ekit_close-side-widget svg'   => 'max-width: {{SIZE}}{{UNIT}};',
                     ],
     
+                ]
+            );
+
+            $this->add_responsive_control(
+                'close_btn_size',
+                [
+                    'label' => esc_html__('Box Size (px)', 'elementskit-lite'),
+                    'type'  => Controls_Manager::SLIDER,
+                    'selectors' => [
+                        '{{WRAPPER}} .ekit_close-side-widget' => 'width: {{SIZE}}px; height: {{SIZE}}px; line-height: calc({{SIZE}}px - 4px);',
+                    ]
                 ]
             );
 
@@ -437,10 +448,10 @@ class ElementsKit_Widget_Header_Offcanvas extends Widget_Base
                     'type' => Controls_Manager::DIMENSIONS,
                     'size_units' => [ 'px', '%', 'em' ],
                     'default' => [
-                        'top' => '',
-                        'right' => '',
-                        'bottom' => '' ,
-                        'left' => '',
+                        'top' => '50',
+                        'right' => '50',
+                        'bottom' => '50' ,
+                        'left' => '50',
                         'unit' => '%',
                     ],
                     'selectors' => [

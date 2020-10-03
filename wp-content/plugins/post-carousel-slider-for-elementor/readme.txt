@@ -1,7 +1,7 @@
 Post Carousel Slider for Elementor
 Tags: elementor post carousel, post carousel elementor, elementor post slider, post slider wordpress, post slider, post carousel, wordpress post carousel
 Requires at least: 4.6
-Tested up to: 5.5
+Tested up to: 5.5.1
 Stable tag: /trunk
 Requires PHP: 5.4
 License: GPLv2 or later
@@ -82,6 +82,10 @@ There is also a [Pro Version](https://plugin-devs.com/product/post-carousel-slid
 3. Screenshot Three
 
 == Changelog ==
+= 1.1.2 (09-23-20) =
+# Tested with Elementor Latest Version
+# Update Review Notification
+
 = 1.1.1 (08-18-20) =
 # Compatible Plugin Deactivation Feedback with WordPress 5.5
 

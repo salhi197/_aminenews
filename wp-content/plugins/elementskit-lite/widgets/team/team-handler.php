@@ -17,7 +17,7 @@ class ElementsKit_Widget_Team_Handler extends \ElementsKit_Lite\Core\Handler_Wid
     }
 
     static function get_categories() {
-        return [ 'elementskit-lite' ];
+        return [ 'elementskit' ];
     }
 
     static function get_dir() {

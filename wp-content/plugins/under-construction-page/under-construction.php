@@ -4,7 +4,7 @@
   Plugin URI: https://underconstructionpage.com/
   Description: Put your site behind a great looking under construction, coming soon, maintenance mode or landing page.
   Author: WebFactory Ltd
-  Version: 3.81
+  Version: 3.82
   Author URI: https://www.webfactoryltd.com/
   Text Domain: under-construction-page
 
@@ -40,6 +40,9 @@ define('UCP_SURVEYS_KEY', 'ucp_surveys');
 
 
 require_once UCP_PLUGIN_DIR . 'ucp-license.php';
+
+require_once 'wp301/wp301.php';
+new wf_wp301(__FILE__, 'settings_page_ucp');
 
 
 // main plugin class
@@ -1251,8 +1254,8 @@ class UCP {
 
     return array_merge($old_options, $options);
   } // sanitize_settings
-  
-  
+
+
   static function empty_cache() {
     wp_cache_flush();
     if (function_exists('w3tc_flush_all')) {
@@ -2438,11 +2441,11 @@ class UCP {
   // add our plugins to recommended list
   static function plugins_api_result($res, $action, $args) {
     remove_filter('plugins_api_result', array(__CLASS__, 'plugins_api_result'), 10, 3);
-    
+
     $res = self::add_plugin_favs('eps-301-redirects', $res);
     $res = self::add_plugin_favs('simple-author-box', $res);
     $res = self::add_plugin_favs('security-ninja', $res);
-    
+
     return $res;
   } // plugins_api_result
 

@@ -208,9 +208,6 @@ class ElementsKit_Widget_Progressbar extends Widget_Base {
                 'label'      => esc_html__( 'Margin Bottom', 'elementskit-lite' ),
                 'type'       => Controls_Manager::SLIDER,
                 'size_units'    => ['px', 'em'],
-                'default'       => [
-                    'size'  => '10',
-                ],
                 'selectors' => [
                     '{{WRAPPER}} .skillbar-group .skill-bar' => 'margin-bottom: {{SIZE}}{{UNIT}};',
                 ],
@@ -393,7 +390,7 @@ class ElementsKit_Widget_Progressbar extends Widget_Base {
          // Icon Styles
          $this->start_controls_section(
             'ekit_progressbar_icon_style', [
-                'label' =>esc_html__( 'Icon', 'elementskit-lite' ),
+                'label' => esc_html__( 'Icon', 'elementskit-lite' ),
                 'tab'   => Controls_Manager::TAB_STYLE,
                 'condition' => [
                     'ekit_progressbar_style!' => '',
@@ -416,6 +413,7 @@ class ElementsKit_Widget_Progressbar extends Widget_Base {
             'ekit_progressbar_icon_typography',
             [
                 'type'          => Controls_Manager::SLIDER,
+                'label'         => esc_html__( 'Icon Size', 'elementskit-lite' ),
                 'size_units'    => ['px', 'em'],
                 'range'  => [
                     'px' => [

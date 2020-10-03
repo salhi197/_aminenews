@@ -17,7 +17,7 @@ class ElementsKit_Widget_Ninja_Forms_Handler extends \ElementsKit_Lite\Core\Hand
     }
 
     static function get_categories() {
-        return [ 'elementskit-lite' ];
+        return [ 'elementskit' ];
     }
 
     static function get_dir() {

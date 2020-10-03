@@ -9,7 +9,7 @@ class ElementsKit_Widget_Social_Handler extends \ElementsKit_Lite\Core\Handler_W
     }
 
     static function get_title() {
-        return esc_html__( 'Social Media', 'elementskit-lite' );
+        return esc_html__( 'Social Icons', 'elementskit-lite' );
     }
 
     static function get_icon() {
@@ -17,7 +17,7 @@ class ElementsKit_Widget_Social_Handler extends \ElementsKit_Lite\Core\Handler_W
     }
 
     static function get_categories() {
-        return ['elementskit-lite'];
+        return [ 'elementskit' ];
     }
 
     static function get_dir() {

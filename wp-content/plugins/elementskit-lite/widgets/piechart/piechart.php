@@ -479,14 +479,15 @@ class ElementsKit_Widget_Piechart extends Widget_Base {
         $this->add_responsive_control(
             'ekit_piechart_iocn_color',
             [
-                'label' => esc_html__( ' Icon Color', 'elementskit-lite' ),
-                'type' => Controls_Manager::COLOR,
+                'label'     => esc_html__( ' Icon Color', 'elementskit-lite' ),
+                'type'      => Controls_Manager::COLOR,
+                'default'   => '#333',
                 'selectors' => [
                     '{{WRAPPER}} .ekit-chart-content i' => 'color: {{VALUE}};',
                     '{{WRAPPER}} .ekit-chart-content svg path'  => 'stroke: {{VALUE}}; fill: {{VALUE}};',
                 ],
                 'condition' => [
-                        'ekit_piechart_icon_type!' => 'image',
+                    'ekit_piechart_icon_type!' => 'image',
                     'ekit_piechart_content' => 'icon',
                 ]
             ]

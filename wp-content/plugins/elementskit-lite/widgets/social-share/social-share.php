@@ -524,7 +524,8 @@ class ElementsKit_Widget_Social_Share extends Widget_Base {
                     '{{WRAPPER}} .ekit_socialshare > li > a' => 'width: {{SIZE}}{{UNIT}};',
                 ],
                 'condition' => [
-                    'ekit_socialshare_list_style_use_height_and_width'  => 'yes'
+                    'ekit_socialshare_list_style_use_height_and_width'  => 'yes',
+                    'ekit_socialshare_style' => 'icon',
                 ]
             ]
 		);
@@ -549,7 +550,8 @@ class ElementsKit_Widget_Social_Share extends Widget_Base {
                     '{{WRAPPER}} .ekit_socialshare > li > a' => 'height: {{SIZE}}{{UNIT}};',
                 ],
                 'condition' => [
-                    'ekit_socialshare_list_style_use_height_and_width'  => 'yes'
+                    'ekit_socialshare_list_style_use_height_and_width'  => 'yes',
+                    'ekit_socialshare_style' => 'icon',
                 ]
             ]
         );

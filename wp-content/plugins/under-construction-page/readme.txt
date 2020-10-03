@@ -1,10 +1,10 @@
 === Under Construction ===
-Contributors: WebFactory, UnderConstructionPage, googlemapswidget, wpreset, securityninja
+Contributors: WebFactory
 Tags: coming soon page, under construction mode, under construction, under construction page, coming soon, maintenance mode, maintenance page, launch page, coming soon mode, maintenance mode page, offline page, maintenance, landing page
 Requires at least: 4.0
 Requires PHP: 5.2
 Tested up to: 5.5
-Stable tag: 3.81
+Stable tag: 3.82
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -137,6 +137,11 @@ Or if needed, upload manually;
 
 
 == Changelog ==
+
+= 3.82 =
+* 2020/10/01
+* minor fixes
+* added promo for WP 301 Redirects
 
 = 3.81 =
 * 2020/08/20

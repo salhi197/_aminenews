@@ -140,7 +140,7 @@ class ElementsKit_Widget_Mail_Chimp extends Widget_Base {
 				'label_on' => esc_html__( 'Show', 'elementskit-lite' ),
 				'label_off' => esc_html__( 'Hide', 'elementskit-lite' ),
 				'return_value' => 'yes',
-				'default' => 'no',
+				'default' => 'yes',
 				'condition' => [
 					'ekit_mail_chimp_section_form_name_show' => 'yes'
 				]
@@ -749,6 +749,22 @@ class ElementsKit_Widget_Mail_Chimp extends Widget_Base {
 			]
 		);
 
+		$this->add_responsive_control(
+			'inline_margin_bottom',
+			[
+				'label'		=> esc_html__( 'Margin Bottom', 'elementskit-lite' ),
+				'type'		=> Controls_Manager::SLIDER,
+				'devices'	=> ['mobile'],
+				'selectors' => [
+					'{{WRAPPER}} .has-extra-fields > .elementskit_input_wraper:not(:last-child)' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+				],
+				'condition' => [
+					'ekit_mail_chimp_form_style_switcher' => 'yes', // Inline Style
+					'ekit_mail_chimp_section_form_name_show' => 'yes', // Show Names
+				]
+			]
+		);
+
 		$this->add_control(
 			'ekit_mail_chimp_input_style_placeholder_heading',
 			[
@@ -1329,15 +1345,21 @@ class ElementsKit_Widget_Mail_Chimp extends Widget_Base {
     }
 
     protected function render_raw( ) {
-		   $settings = $this->get_settings_for_display();
-		   extract($settings);
-
-		 ?>
-		 <div class="ekit-mail-chimp">
+		$settings = $this->get_settings_for_display();
+		extract($settings);
+		
+		$this->add_render_attribute(
+			'content_wrapper',
+			[
+				'class'	=> 'elementskit_form_wraper'.($ekit_mail_chimp_form_style_switcher == 'yes' ? ' elementskit_inline_form' : '' ).(($ekit_mail_chimp_section_form_phone_show === 'yes' || $ekit_mail_chimp_section_form_name_show === 'yes') ? ' has-extra-fields' : ''),
+			]
+		);
+		?>
+		<div class="ekit-mail-chimp">
 			<form method="post" class="ekit-mailChimpForm" data-listed="<?php echo esc_attr($ekit_mail_chimp_select_listed_id);?>" data-success-message="<?php echo esc_attr($ekit_mail_chimp_success_message); ?>">
 			<div class="ekit-mail-message"></div>
 
-				<div class="elementskit_form_wraper <?php if($ekit_mail_chimp_form_style_switcher == 'yes'): ?>elementskit_inline_form<?php endif;?>">
+				<div <?php echo $this->get_render_attribute_string('content_wrapper'); ?>>
 				<?php if(isset($ekit_mail_chimp_section_form_name_show) && $ekit_mail_chimp_section_form_name_show == 'yes'):?>
 					<div class="ekit-mail-chimp-name elementskit_input_wraper elementskit_input_container">
 						<?php // if( strlen($ekit_mail_chimp_first_name_label) > 1 || strlen($ekit_mail_chimp_first_name_placeholder) > 1): ?>
@@ -1591,10 +1613,7 @@ class ElementsKit_Widget_Mail_Chimp extends Widget_Base {
 					</div>
 				</div>
 			</form>
-		 </div>
-		 <?php
+		</div>
+		<?php
 	  }
-
-	  protected function _content_template() { }
-
 }

@@ -226,8 +226,6 @@ class ElementsKit_Widget_Icon_Box extends Widget_Base {
                 'placeholder' =>esc_url('http://your-link.com'),
                 'default' => [
                     'url' => '#',
-                    'is_external' => true,
-					'nofollow' => true,
                 ],
                 'dynamic' => [
                     'active' => true,
@@ -309,8 +307,6 @@ class ElementsKit_Widget_Icon_Box extends Widget_Base {
                 'show_external' => true,
                 'default' => [
                     'url' => 'https://your-link.com',
-                    'is_external' => true,
-                    'nofollow' => true,
                 ],
                 'dynamic' => [
                     'active' => true,
@@ -1256,14 +1252,6 @@ class ElementsKit_Widget_Icon_Box extends Widget_Base {
                 'selectors' => [
                     '{{WRAPPER}} .elementskit-infobox' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
-            ]
-        );
-        $this->add_control(
-            'ekit_icon_box_infobox_box_ainmation',
-            [
-                'label' => esc_html__( 'Entrance Animation', 'elementskit-lite' ),
-                'type' => Controls_Manager::ANIMATION,
-                'prefix_class' => 'animated ',
             ]
         );
         $this->end_controls_tab();

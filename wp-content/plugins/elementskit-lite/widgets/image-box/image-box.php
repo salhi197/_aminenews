@@ -292,8 +292,6 @@ class ElementsKit_Widget_Image_Box extends Widget_Base {
 				'placeholder' =>esc_url('http://your-link.com'),
 				'default' => [
                     'url' => '#',
-                    'is_external' => true,
-					'nofollow' => true,
                 ],
                 'dynamic' => [
                     'active' => true,
@@ -1383,8 +1381,8 @@ class ElementsKit_Widget_Image_Box extends Widget_Base {
                 'label' => esc_html__( 'Text Color', 'elementskit-lite' ),
                 'type' => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .elementskit-info-image-box:hover .elementskit-btn' => 'color: {{VALUE}};',
-                    '{{WRAPPER}} .elementskit-info-image-box:hover .elementskit-btn svg path' => 'stroke: {{VALUE}}; fill: {{VALUE}};', 
+                    '{{WRAPPER}} .elementskit-info-image-box .elementskit-btn:hover' => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .elementskit-info-image-box .elementskit-btn:hover svg path' => 'stroke: {{VALUE}}; fill: {{VALUE}};', 
                 ],
             ]
         );
@@ -1395,7 +1393,7 @@ class ElementsKit_Widget_Image_Box extends Widget_Base {
                 'name' => 'ekit_image_box_btn_background_hover_group',
                 'label' => esc_html__( 'Background', 'elementskit-lite' ),
                 'types' => [ 'classic', 'gradient' ],
-                'selector' => '{{WRAPPER}} .elementskit-info-image-box:hover .elementskit-btn',
+                'selector' => '{{WRAPPER}} .elementskit-info-image-box .elementskit-btn:hover',
             ]
         );
 
@@ -1404,7 +1402,7 @@ class ElementsKit_Widget_Image_Box extends Widget_Base {
             [
                 'name' => 'ekit_image_box_button_border_hv_color_group',
                 'label' => esc_html__( 'Border', 'elementskit-lite' ),
-                'selector' => '{{WRAPPER}} .elementskit-info-image-box:hover .elementskit-btn',
+                'selector' => '{{WRAPPER}} .elementskit-info-image-box .elementskit-btn:hover',
             ]
         );
         $this->add_responsive_control(
@@ -1420,7 +1418,7 @@ class ElementsKit_Widget_Image_Box extends Widget_Base {
 					'left' => '',
 				],
 				'selectors' => [
-					'{{WRAPPER}} .elementskit-info-image-box:hover .elementskit-btn' =>  'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .elementskit-info-image-box .elementskit-btn:hover' =>  'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
@@ -1428,7 +1426,7 @@ class ElementsKit_Widget_Image_Box extends Widget_Base {
             Group_Control_Box_Shadow::get_type(),
             [
                 'name' => 'ekit_image_box_button_box_shadow_hover_group',
-                'selector' => '{{WRAPPER}} .elementskit-info-image-box:hover .elementskit-btn',
+                'selector' => '{{WRAPPER}} .elementskit-info-image-box .elementskit-btn:hover',
             ]
         );
 

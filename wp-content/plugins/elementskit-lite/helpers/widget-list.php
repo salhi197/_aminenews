@@ -50,7 +50,7 @@ class Widget_List {
 
 
 	/**
-	 * Check if a widget is active or not, pro-disabled package are considered inactive
+	 * Check if a widget is active or not, free package are considered inactive
 	 *
 	 * Usage : \ElementsKit_Lite\Helpers\Widget_List::instance()->is_active('facebook-review')
 	 *
@@ -71,7 +71,7 @@ class Widget_List {
 		'image-accordion'  => [
 			'slug'    => 'image-accordion',
 			'title'   => 'Image Accordion',
-			'package' => 'free', // free, pro, pro-disabled
+			'package' => 'free', // free, pro, free
 			//'path' => 'path to the widget directory',
 			//'base_class_name' => 'main class name',
 			//'title' => 'widget title',
@@ -419,6 +419,23 @@ class Widget_List {
 		'pinterest-feed' => [
 			'slug'    => 'pinterest-feed',
 			'title'   => 'Pinterest Feed',
+			'package' => 'pro-disabled',
+        ],
+        
+		'popup-modal' => [
+			'slug'    => 'popup-modal',
+			'title'   => 'Popup Modal',
+			'package' => 'pro-disabled',
+		],
+
+		'google-map' => [
+			'slug'    => 'google-map',
+			'title'   => 'Google Map',
+			'package' => 'pro-disabled',
+		],
+		'unfold'         => [
+			'slug'    => 'unfold',
+			'title'   => 'Unfold',
 			'package' => 'pro-disabled',
 		],
 	];

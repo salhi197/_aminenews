@@ -159,7 +159,7 @@ class ElementsKit_Widget_Page_List extends Widget_Base {
 				'fa4compatibility' => 'icon',
                 'default' => [
                     'value' => 'fas fa-check',
-                    'library' => 'solid',
+                    'library' => 'fa-solid',
                 ],
 				'condition' => [
 					'ekit_page_list_show_icon' => 'yes'

@@ -550,6 +550,40 @@ $user_data = $this->utils->get_option('user_data', []);
 	            <?php endif; ?>
             </div>
 
+            <div class="attr-panel ekit_accordion_card">
+                <div <?php
+                    if(\ElementsKit_Lite\Helpers\Widget_List::instance()->is_active('google-map')) {
+                        echo 'class="attr-panel-heading"';
+                    } else {
+                        echo 'class="attr-panel-heading pro-disabled" data-attr-toggle="modal" data-target="#elementskit_go_pro_modal"';
+                    }
+                    ?> role="tab" id="google_map_data_heading">
+                    <a class="attr-btn attr-collapsed" role="button" data-attr-toggle="collapse" data-parent="#accordion"
+                       href="#google_map_data_control" aria-expanded="false"
+                       aria-controls="google_map_data_control">
+				        <?php esc_html_e('Google Map', 'elementskit-lite'); ?>
+                    </a>
+                </div>
+		        <?php if(\ElementsKit_Lite\Helpers\Widget_List::instance()->is_active('google-map')) : ?>
+                    <div id="google_map_data_control" class="attr-panel-collapse attr-collapse" role="tabpanel"
+                         aria-labelledby="google_map_data_heading" aria-expanded='false'>
+                        <div class="attr-panel-body">
+                            <div class="ekit-admin-user-data-separator"></div>
+					        <?php
+					        $this->utils->input([
+						        'type' => 'text',
+						        'name' => 'user_data[google_map][api_key]',
+						        'label' => esc_html__('Api Key', 'elementskit-lite'),
+						        'placeholder' => 'AIzaSyA-10-OHpfss9XvUDWILmos62MnG_L4MYw',
+						        'value' => (!isset($user_data['google_map']['api_key'])) ? '' : ($user_data['google_map']['api_key'])
+					        ]);
+					        ?>
+
+                        </div>
+                    </div>
+		        <?php endif; ?>
+            </div>
+
         </div>
     </div>
 </div>

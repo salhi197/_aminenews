@@ -56,7 +56,7 @@ class Plugin{
         // Register wpml compability module
         Compatibility\Wpml\Init::instance();
         Compatibility\Conflicts\Init::instance();
-        
+
         // Register data migration class
          Compatibility\Data_Migration\Translate_File::instance()->init();
          Libs\Xs_Migration\Initiator::instance()->init();
@@ -98,7 +98,7 @@ class Plugin{
      */
     public function enqueue_admin(){
         $screen = get_current_screen();
-        
+
         if(!in_array($screen->id, ['nav-menus', 'toplevel_page_elementskit', 'edit-elementskit_template', 'elementskit_page_elementskit-license'])){
             return;
         }
@@ -159,7 +159,7 @@ class Plugin{
      * @access public
      */
 	public function add_meta_for_search_excluded(){
-        if ( in_array(get_post_type(), 
+        if ( in_array(get_post_type(),
                 ['elementskit_widget', 'elementskit_template', 'elementskit_content'])
             ){
 			echo '<meta name="robots" content="noindex,nofollow" />', "\n";

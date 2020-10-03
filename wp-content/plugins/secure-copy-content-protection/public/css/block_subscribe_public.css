@@ -1,0 +1,26 @@
+.consub_div {
+    text-align: center;
+    border: 1px solid;
+    padding: 15px;
+    margin: 25px 0px;
+}
+
+.consub_icon img {
+    margin: auto;
+}
+
+.subscribe_form {
+    display: flex;
+    padding: 10px 0;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.subscribe_form input[type='submit'] {
+    text-decoration: none;
+    margin-top: 10px;
+}
+
+img.ays_sccp_lock_sub {
+    width: 30px;
+}

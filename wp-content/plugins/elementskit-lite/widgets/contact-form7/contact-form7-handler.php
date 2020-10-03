@@ -16,7 +16,7 @@ class ElementsKit_Widget_Contact_Form7_Handler extends \ElementsKit_Lite\Core\Ha
     }
 
     static function get_categories() {
-        return [ 'elementskit-lite' ];
+        return [ 'elementskit' ];
     }
 
     static function get_dir() {

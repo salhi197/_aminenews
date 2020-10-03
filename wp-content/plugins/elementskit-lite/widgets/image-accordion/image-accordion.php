@@ -178,8 +178,6 @@ class ElementsKit_Widget_Image_Accordion extends Widget_Base {
                         'show_external' => true,
                         'default' => [
                             'url' => '',
-                            'is_external' => true,
-                            'nofollow' => true,
                         ],
                         'condition' => [
                             'ekit_img_accordion_enable_project_link' => 'yes'
@@ -271,7 +269,7 @@ class ElementsKit_Widget_Image_Accordion extends Widget_Base {
             array(
                 'name'     => 'ekit_img_accordion_bg_active_color',
                 'default' => '',
-                'selector' => '{{WRAPPER}} .elementskit-image-accordion-wraper .elementskit-single-image-accordion.active:before',
+                'selector' => '{{WRAPPER}} .elementskit-image-accordion-wraper input:checked + .elementskit-single-image-accordion:before',
 
 			)
         );

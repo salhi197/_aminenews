@@ -117,9 +117,78 @@ class ElementsKit_Widget_Post_Grid extends Widget_Base {
 					'{{WRAPPER}} .post_grid_img_thumb' => 'height: {{SIZE}}{{UNIT}};',
 				],
 			]
+        );
+        
+        $this->add_control(
+			'bottom_space',
+			[
+				'label'     => esc_html__( 'Bottom Space', 'elementskit-lite' ),
+				'type'      => Controls_Manager::SLIDER,
+				'selectors' => [
+					'{{WRAPPER}} .ekit-post_grid-item' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+				],
+			]
 		);
 
         $this->end_controls_section();
+
+        
+		$this->start_controls_section(
+			'title_style',
+			[
+				'label' => esc_html__( 'Title', 'elementskit-lite' ),
+				'tab'   => Controls_Manager::TAB_STYLE
+			]
+		);
+			$this->add_group_control(
+				\Elementor\Group_Control_Typography::get_type(),
+				[
+					'name' => 'title_font',
+					'label' => esc_html__( 'Typography', 'elementskit-lite' ),
+					'selector' => '{{WRAPPER}} .ekit-post_grid-title',
+				]
+			);
+
+			$this->start_controls_tabs(
+				'title_style_tabs'
+			);
+				$this->start_controls_tab(
+					'title_style_tab_normal',
+					[
+						'label' => esc_html__( 'Normal', 'elementskit-lite' ),
+					]
+				);
+					$this->add_control(
+						'title_color_normal',
+						[
+							'label' => esc_html__( 'Color', 'elementskit-lite' ),
+							'type' => \Elementor\Controls_Manager::COLOR,
+							'selectors' => [
+								'{{WRAPPER}} .ekit-post_grid-title' => 'color: {{VALUE}}',
+							],
+						]
+					);
+				$this->end_controls_tab();
+				
+				$this->start_controls_tab(
+					'title_style_tab_hover',
+					[
+						'label' => esc_html__( 'Hover', 'elementskit-lite' ),
+					]
+				);
+					$this->add_control(
+						'title_color_hover',
+						[
+							'label' => esc_html__( 'Color', 'elementskit-lite' ),
+							'type' => \Elementor\Controls_Manager::COLOR,
+							'selectors' => [
+								'{{WRAPPER}} .ekit-post_grid-item:hover .ekit-post_grid-title > a' => 'color: {{VALUE}}',
+							],
+						]
+					);
+				$this->end_controls_tab();
+			$this->end_controls_tabs();
+		$this->end_controls_section();
 
         $this->insert_pro_message();
     }
@@ -146,7 +215,7 @@ class ElementsKit_Widget_Post_Grid extends Widget_Base {
             [
                 'ekit-single-item' => [
                     'class' => [
-                        'tab__post__single--item',
+                        'tab__post__single--item ekit-post_grid-item',
                         $count_col,
                         'tablet-' . $settings['count_col_tablet'],
                         'mobile-' . $settings['count_col_mobile'],
@@ -158,7 +227,7 @@ class ElementsKit_Widget_Post_Grid extends Widget_Base {
 
         ?>
 
-        <div class="ekit--tab__post__details ekit--post_grid">
+        <div class="ekit--tab__post__details ekit-post_grid">
             <?php $xs_query = new \WP_Query( $query ); ?>
             <?php  if($xs_query->have_posts()): ?>
                 <?php while ($xs_query->have_posts()) : ?>
@@ -174,7 +243,7 @@ class ElementsKit_Widget_Post_Grid extends Widget_Base {
                                     </div>
                                 <?php endif; ?>
                             </a>
-                            <h3 class="tab__post--title"><a href="<?php echo get_the_permalink(); ?>"><?php the_title(); ?></a></h3>
+                            <h3 class="tab__post--title ekit-post_grid-title"><a href="<?php echo get_the_permalink(); ?>"><?php the_title(); ?></a></h3>
                         </div>
                     <?php endif; ?>
                     

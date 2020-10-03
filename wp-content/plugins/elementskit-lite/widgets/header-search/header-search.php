@@ -86,16 +86,6 @@ class ElementsKit_Widget_Header_Search extends Widget_Base
             ]
         );
 
-
-        $this->add_group_control(
-            Group_Control_Border::get_type(),
-            [
-                'name' => 'ekit_border',
-                'selector' => '{{WRAPPER}} .ekit_navsearch-button',
-                'separator' => 'before',
-            ]
-        );
-
         $this->end_controls_section();
 
 
@@ -168,12 +158,14 @@ class ElementsKit_Widget_Header_Search extends Widget_Base
             );
             $this->end_controls_tab();
         $this->end_controls_tabs();
-
-        $this->add_control(
-			'ekit_header_search_hr',
-			[
-				'type' => Controls_Manager::DIVIDER,
-			]
+		
+        $this->add_group_control(
+            Group_Control_Border::get_type(),
+            [
+                'name' => 'ekit_border',
+                'selector' => '{{WRAPPER}} .ekit_navsearch-button',
+                'separator' => 'before',
+            ]
         );
 
         // box shadow
@@ -190,13 +182,6 @@ class ElementsKit_Widget_Header_Search extends Widget_Base
                 'label' => esc_html__( 'Border radius', 'elementskit-lite' ),
                 'type' => Controls_Manager::DIMENSIONS,
                 'size_units' => [ 'px', '%', 'em' ],
-                'default' => [
-                    'top' => '50',
-                    'right' => '50',
-                    'bottom' => '50' ,
-                    'left' => '50',
-                    'unit' => '%',
-                ],
                 'selectors' => [
                     '{{WRAPPER}} .ekit_navsearch-button' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
@@ -449,5 +434,4 @@ class ElementsKit_Widget_Header_Search extends Widget_Base
         <!-- end language switcher strart -->
         <?php
     }
-    protected function _content_template() { }
 }

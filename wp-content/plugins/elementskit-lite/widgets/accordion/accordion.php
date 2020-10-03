@@ -41,9 +41,10 @@ class ElementsKit_Widget_Accordion extends Widget_Base {
 
         $repeater->add_control(
             'acc_title', [
-                'label' => esc_html__('Title', 'elementskit-lite'),
-                'type' => Controls_Manager::TEXT,
-                'label_block' => true,
+                'label'         => esc_html__('Title', 'elementskit-lite'),
+                'type'          => Controls_Manager::TEXT,
+                'label_block'   => true,
+                'default'       => 'Accordion Item',
             ]
         );
 
@@ -60,9 +61,10 @@ class ElementsKit_Widget_Accordion extends Widget_Base {
 
         $repeater->add_control(
             'acc_content', [
-                'label' => esc_html__('Description', 'elementskit-lite'),
-                'type' => Controls_Manager::WYSIWYG,
-                'label_block' => true,
+                'label'         => esc_html__('Description', 'elementskit-lite'),
+                'type'          => Controls_Manager::WYSIWYG,
+                'label_block'   => true,
+                'default'       => 'Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast',
             ]
         );
 
@@ -75,16 +77,16 @@ class ElementsKit_Widget_Accordion extends Widget_Base {
                 'title_field' => '{{ acc_title }}',
                 'default' => [
                     [
-                        'acc_title' => ' How to Change my Photo from Admin Dashboard? ',
+                        'acc_title' => 'How to Change my Photo from Admin Dashboard?',
                         'acc_content' => 'Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast',
                         'ekit_acc_is_active'    => 'yes'
                     ],
                     [
-                        'acc_title' => ' How to Change my Password easily?',
+                        'acc_title' => 'How to Change my Password easily?',
                         'acc_content' => 'Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast',
                     ],
                     [
-                        'acc_title' => ' How to Change my Subscription Plan using PayPal',
+                        'acc_title' => 'How to Change my Subscription Plan using PayPal',
                         'acc_content' => 'Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast',
                     ],
                 ],
@@ -537,7 +539,7 @@ class ElementsKit_Widget_Accordion extends Widget_Base {
                     'size' => 90,
                 ],
                 'selectors' => [
-                    '{{WRAPPER}} .elementskit-accordion.floating-style .elementskit-card-body' => 'width: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .elementskit-accordion.floating-style .elementskit-card-body' => 'max-width: {{SIZE}}{{UNIT}};',
                 ],
                 'condition' => [
                     'ekit_accordion_style' => 'floating-style'

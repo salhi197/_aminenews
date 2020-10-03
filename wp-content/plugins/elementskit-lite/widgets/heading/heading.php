@@ -44,8 +44,8 @@ class ElementsKit_Widget_Heading extends Widget_Base {
 				'type'			 => Controls_Manager::TEXT,
 				'description'	=> esc_html__( '"Focused Title" Settings will be worked, If you use this {{something}} format', 'elementskit-lite' ),
 				'label_block'	 => true,
-				'placeholder'	 =>esc_html__( 'Grow your ', 'elementskit-lite' ),
-				'default'	 =>esc_html__( 'Grow your ', 'elementskit-lite' ),
+				'placeholder'	 =>esc_html__( 'Grow your {{report}}', 'elementskit-lite' ),
+				'default'	 =>esc_html__( 'Grow your {{report}}', 'elementskit-lite' ),
 
 			]
 		);

@@ -49,10 +49,11 @@ class Widget_Writer {
 
 		$css_enqueue = $this->prepare_css_file($this->widget_obj->css, $wp_filesystem);
 		$js_enqueue  = $this->prepare_js_file($this->widget_obj->js, $wp_filesystem);
+		$include_js  = !empty($this->widget_obj->js_includes) || !empty($this->widget_obj->css_includes);
 
 		$content = $this->prepare_php_file();
 
-		if($css_enqueue === true || $js_enqueue === true) {
+		if($css_enqueue === true || $js_enqueue === true || $include_js === true) {
 
 			$content .= $this->write_construct_method($css_enqueue, $js_enqueue);
 		}
@@ -160,6 +161,26 @@ class Widget_Writer {
 
 		if($js === true) {
 			$ret .= "\t\t" . 'wp_register_script( \'' . $nm . '-script-handle\', \'' . $url_path . '/script.js\', [ \'elementor-frontend\' ], \'1.0.0\', true );' . PHP_EOL;
+		}
+
+		if(!empty($this->widget_obj->css_includes)) {
+
+			$ret .= PHP_EOL;
+
+			foreach($this->widget_obj->css_includes as $idx => $cssInclude) {
+
+				$ret .= "\t\t" . 'wp_enqueue_style( \'' . $nm . '-'.$idx.'-style-handle\', \'' . $cssInclude . '\');' . PHP_EOL;
+			}
+		}
+
+		if(!empty($this->widget_obj->js_includes)) {
+
+			$ret .= PHP_EOL;
+
+			foreach($this->widget_obj->js_includes as $idx => $jsInclude) {
+
+				$ret .= "\t\t" . 'wp_enqueue_script( \'' . $nm . '-'.$idx.'-script-handle\', \'' . $jsInclude . '\', [ \'elementor-frontend\' ], \'1.0.0\', true );' . PHP_EOL;
+			}
 		}
 
 		$ret .= "\t" . '}' . PHP_EOL . PHP_EOL;

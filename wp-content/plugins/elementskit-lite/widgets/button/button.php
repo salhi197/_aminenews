@@ -63,8 +63,6 @@ class ElementsKit_Widget_Button extends Widget_Base {
                 ],
 				'default' => [
 					'url' => '#',
-					'is_external' => true,
-                    'nofollow' => true,
 				],
 			]
 		);
@@ -171,6 +169,17 @@ class ElementsKit_Widget_Button extends Widget_Base {
 			[
 				'label' =>esc_html__( 'Button', 'elementskit-lite' ),
 				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_responsive_control(
+			'width',
+			[
+				'label'			=> esc_html__( 'Width (%)', 'elementskit-lite' ),
+				'type'			=> Controls_Manager::SLIDER,
+				'selectors'		=> [
+					'{{WRAPPER}} .elementskit-btn' => 'width: {{SIZE}}%;',
+				]
 			]
 		);
 
@@ -331,6 +340,23 @@ class ElementsKit_Widget_Button extends Widget_Base {
 				],
 			]
 		);
+		$this->add_responsive_control(
+			'ekit_btn_border_radius',
+			[
+				'label' =>esc_html__( 'Border Radius', 'elementskit-lite' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%'],
+				'default' => [
+					'top' => '',
+					'right' => '',
+					'bottom' => '' ,
+					'left' => '',
+				],
+				'selectors' => [
+					'{{WRAPPER}} .elementskit-btn' =>  'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
 		$this->end_controls_tab();
 
 		$this->start_controls_tab(
@@ -350,25 +376,19 @@ class ElementsKit_Widget_Button extends Widget_Base {
 				],
 			]
 		);
-		$this->end_controls_tab();
-		$this->end_controls_tabs();
 		$this->add_responsive_control(
-			'ekit_btn_border_radius',
+			'ekit_btn_border_radius_h',
 			[
 				'label' =>esc_html__( 'Border Radius', 'elementskit-lite' ),
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%'],
-				'default' => [
-					'top' => '',
-					'right' => '',
-					'bottom' => '' ,
-					'left' => '',
-				],
 				'selectors' => [
-					'{{WRAPPER}} .elementskit-btn' =>  'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .elementskit-btn:hover' =>  'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
+		$this->end_controls_tab();
+		$this->end_controls_tabs();
 		$this->end_controls_section();
 
         $this->start_controls_section(

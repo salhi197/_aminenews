@@ -350,6 +350,99 @@ class ElementsKit_Widget_Post_Tab extends Widget_Base {
 
 		$this->end_controls_section();
 
+		$this->start_controls_section(
+			'ekit_image',
+			[
+				'label' => esc_html__( 'Image', 'elementskit-lite' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'image_disable_hover_effect',
+			[
+				'label'     => esc_html__( 'Disable Hover Effect', 'elementskit-lite' ),
+				'type'      => Controls_Manager::SWITCHER,
+				'label_on'  => esc_html__( 'Yes', 'elementskit-lite' ),
+				'label_off' => esc_html__( 'No', 'elementskit-lite' ),
+				'default'   => 'no',
+			]
+		);
+
+		$this->add_control(
+			'ekit_image_width',
+			[
+				'label' => esc_html__( 'Width', 'elementskit-lite' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', '%' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 500,
+						'step' => 1,
+					],
+					'%' => [
+						'min' => 0,
+						'max' => 100,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ekit--tab__post__details .tab__post--header>img' => 'width: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);
+	
+		   $this->add_control(
+			'ekit_image_height',
+			[
+				'label' => esc_html__( 'Height', 'elementskit-lite' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', '%' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 500,
+						'step' => 1,
+					],
+					'%' => [
+						'min' => 0,
+						'max' => 100,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ekit--tab__post__details .tab__post--header>img' => 'height: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+            'ekit_image_alignment',
+            [
+                'label' =>esc_html__( 'Nav Content Alignment', 'elementskit-lite' ),
+                'type' => Controls_Manager::CHOOSE,
+                'options' => [
+                    'left'    => [
+                        'title' =>esc_html__( 'Left', 'elementskit-lite' ),
+                        'icon' => 'fa fa-align-left',
+                    ],
+                    'center' => [
+                        'title' =>esc_html__( 'Center', 'elementskit-lite' ),
+                        'icon' => 'fa fa-align-center',
+                    ],
+                    'right' => [
+                        'title' =>esc_html__( 'Right', 'elementskit-lite' ),
+                        'icon' => 'fa fa-align-right',
+                    ],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .ekit--tab__post__details .tab__post--header' => 'text-align: {{VALUE}};'
+                ],
+                'default' => 'left',
+            ]
+		);
+		
+		$this->end_controls_section();
+
 		$this->insert_pro_message();
     }
 
@@ -360,9 +453,9 @@ class ElementsKit_Widget_Post_Tab extends Widget_Base {
     }
 
     protected function render_raw( ) {
-        $settings = $this->get_settings();
-        extract($settings); ?>
-		<div class="ekit-post-tab post--tab hover--active">
+        $settings = $this->get_settings_for_display();
+        extract($settings); if(empty($post_cat)){return false;}; ?>
+		<div class="ekit-post-tab post--tab hover--active <?php echo !empty($image_disable_hover_effect) && $image_disable_hover_effect == 'yes' ? 'disbale-hover' : ''; ?>">
             <div class="tabHeader">
                 <div class="tab__list">
 					<?php $i=1;  foreach($post_cat as $cat):

@@ -160,7 +160,18 @@ class ElementsKit_Widget_Blog_Posts extends Widget_Base {
                'default'   => 'yes',
                'condition' => ['ekit_blog_posts_layout_style!' => 'elementskit-blog-block-post'],
            ]
-       );
+	   );
+	   
+			$this->add_control(
+				'grid_masonry',
+				[
+					'label'	=> esc_html__( 'Enable Masonry', 'elementskit-lite' ),
+					'type'	=> Controls_Manager::SWITCHER,
+					'condition'	=> [
+						'ekit_blog_posts_layout_style!'	=> 'elementskit-blog-block-post',
+					]
+				]
+			);
 
        $this->end_controls_section();
        // Query
@@ -579,15 +590,15 @@ class ElementsKit_Widget_Blog_Posts extends Widget_Base {
                'label'   => esc_html__( 'Vertical Alignment', 'elementskit-lite' ),
                'type'    => Controls_Manager::CHOOSE,
                'options' => [
-                   'd-flex align-items-start'  => [
+                   'flex-start'  => [
                        'title' => esc_html__( 'Top', 'elementskit-lite' ),
                        'icon'  => 'eicon-v-align-top',
                    ],
-                   'd-flex align-items-center' => [
+                   'center' => [
                        'title' => esc_html__( 'Middle', 'elementskit-lite' ),
                        'icon'  => 'eicon-v-align-middle',
                    ],
-                   'd-flex align-items-end'    => [
+                   'flex-end'    => [
                        'title' => esc_html__( 'Bottom', 'elementskit-lite' ),
                        'icon'  => 'eicon-v-align-bottom',
                    ],
@@ -595,7 +606,10 @@ class ElementsKit_Widget_Blog_Posts extends Widget_Base {
                'condition' => [
                    'ekit_blog_posts_layout_style' => 'elementskit-blog-block-post',
                ],
-               'default'   => 'd-flex align-items-center',
+               'default'   => 'flex-start',
+               'selectors'  => [
+                   '{{WRAPPER}} .elementskit-blog-block-post > .row'    => 'align-items: {{VALUE}};',
+               ],
            ]
        );
 
@@ -2461,8 +2475,8 @@ class ElementsKit_Widget_Blog_Posts extends Widget_Base {
             ]
         );
 
-        if ($ekit_blog_posts_layout_style !== 'elementskit-blog-block-post'):
-            $this->add_render_attribute('post_items', 'data-masonry', 'true');
+        if ($grid_masonry === 'yes'):
+            $this->add_render_attribute('post_items', 'data-masonry-config', 'true');
         endif;
 
        // Post Query
@@ -2617,14 +2631,14 @@ class ElementsKit_Widget_Blog_Posts extends Widget_Base {
                     <div class="<?php echo esc_attr( $ekit_blog_posts_layout_style ); ?>">
                         <div class="row no-gutters">
                             <?php if ( 'yes' == $ekit_blog_posts_feature_img && has_post_thumbnail() ): ?>
-                                <div class="<?php echo esc_attr( $column_size.' '.$ekit_blog_posts_vertical_alignment.' '.$img_order ); ?>">
+                                <div class="<?php echo esc_attr( $column_size.' '.$img_order ); ?>">
                                     <a href="<?php the_permalink(); ?>" class="elementskit-entry-thumb">
                                         <img src="<?php the_post_thumbnail_url(); ?>" alt="<?php the_title(); ?>">
                                     </a><!-- .elementskit-entry-thumb END -->
                                 </div>
                             <?php endif; ?>
 
-                            <div class="<?php echo esc_attr( $column_size.' '.$ekit_blog_posts_vertical_alignment.' '.$content_order ); ?>">
+                            <div class="<?php echo esc_attr( $column_size.' '.$content_order ); ?>">
                                 <div class="elementskit-post-body <?php echo esc_attr($highlight_border); ?>">
                                     <div class="elementskit-entry-header">
                                         <?php if ( 'yes' == $ekit_blog_posts_title && 'before_meta' == $ekit_blog_posts_title_position ): ?>
@@ -2813,7 +2827,7 @@ class ElementsKit_Widget_Blog_Posts extends Widget_Base {
                'use strict';
 
                $(function () {
-                   var $postItems = $('#post-items--<?php echo esc_attr( $this->get_id() ); ?>[data-masonry]');
+                   var $postItems = $('#post-items--<?php echo esc_attr( $this->get_id() ); ?>[data-masonry-config]');
 
                    $postItems.imagesLoaded(function () {
                        $postItems.masonry();

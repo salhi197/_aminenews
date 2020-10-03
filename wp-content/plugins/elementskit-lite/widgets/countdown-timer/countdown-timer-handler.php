@@ -16,7 +16,7 @@ class ElementsKit_Widget_Countdown_Timer_Handler extends \ElementsKit_Lite\Core\
     }
 
     static function get_categories() {
-        return [ 'elementskit-lite' ];
+        return [ 'elementskit' ];
     }
 
     static function get_dir() {

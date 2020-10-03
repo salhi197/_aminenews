@@ -109,6 +109,11 @@ class Module_List{
 	        'package' => 'pro-disabled',
 	        'title'   => 'Facebook Messenger',
         ],
+        'conditional-content' => [
+            'slug'    => 'conditional-content',
+            'package' => 'pro-disabled',
+            'title'   => 'Conditional Content',
+        ],
     ];
 
 }

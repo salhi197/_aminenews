@@ -1253,9 +1253,6 @@ body.toplevel_page_elementskit {
   width: 100px;
 }
 
-
-
-.ekit-content-type-pro .ekit-admin-input-switch:after,
 .ekit-content-type-pro-disabled .ekit-admin-input-switch:after {
   position: absolute;
   content: "";

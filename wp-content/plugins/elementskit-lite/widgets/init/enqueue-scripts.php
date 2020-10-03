@@ -1,5 +1,6 @@
 <?php
 namespace ElementsKit_Lite\Widgets\Init;
+use ElementsKit_Lite\Libs\Framework\Attr;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -13,7 +14,7 @@ class Enqueue_Scripts{
         add_action( 'elementor/frontend/before_enqueue_scripts', [$this, 'elementor_js'] );
         add_action( 'elementor/editor/after_enqueue_styles', [$this, 'elementor_css'] );
 
-        add_action( 'elementor/preview/enqueue_styles', [ $this, 'enqueue_preview_style' ] );
+        add_action( 'elementor/preview/enqueue_styles', [ $this, 'enqueue_3rd_party_style' ] );
     }
 
     public function elementor_js() {
@@ -21,31 +22,44 @@ class Enqueue_Scripts{
     }
 
     public function elementor_css() {
-        wp_enqueue_style( 'elementskit-panel', \ElementsKit_Lite::widget_url() . 'init/assets/css/editor.css',null, \ElementsKit_Lite::version() );
+        wp_enqueue_style( 'elementskit-panel', \ElementsKit_Lite::widget_url() . 'init/assets/css/editor.css', null, \ElementsKit_Lite::version() );
     }
 
     public function frontend_js() {
-        if(!is_admin()){
-            
-            /*
-            * Register scripts.
-            * This scripts are only loaded when the associated widget is being used on a page.
-            */
-            wp_enqueue_script( 'ekit-core', \ElementsKit_Lite::widget_url() . 'init/assets/js/ekit-core.js', array( 'jquery' ), false, true ); // Core most of the widgets init are bundled //
-            wp_register_script( 'goodshare', \ElementsKit_Lite::widget_url() . 'init/assets/js/goodshare.min.js', array( 'jquery' ), false, true ); // sosial share //       
-            wp_register_script( 'datatables', \ElementsKit_Lite::widget_url() . 'init/assets/js/datatables.min.js', array( 'jquery' ), false, true ); // table //
+        if(is_admin()){
+            return;
         }
+            
+        /*
+        * Register scripts.
+        * This scripts are only loaded when the associated widget is being used on a page.
+        */
+        wp_enqueue_script( 'ekit-widget-scripts', \ElementsKit_Lite::widget_url() . 'init/assets/js/widget-scripts.js', array( 'jquery' ), \ElementsKit_Lite::version(), true ); // Core most of the widgets init are bundled //
+        wp_register_script( 'goodshare', \ElementsKit_Lite::widget_url() . 'init/assets/js/goodshare.min.js', array( 'jquery' ), false, true ); // sosial share //       
+        wp_register_script( 'datatables', \ElementsKit_Lite::widget_url() . 'init/assets/js/datatables.min.js', array( 'jquery' ), false, true ); // table //
+
+        $user_data = Attr::instance()->utils->get_option('user_data', []);
+        $gmap_api_key = !empty($user_data['google_map']) ? $user_data['google_map']['api_key'] : '';
+        wp_enqueue_script( 'ekit-google-map-api', 'https://maps.googleapis.com/maps/api/js?key=' . $gmap_api_key . '', array('jquery'), false, true );
+        wp_enqueue_script( 'ekit-google-gmaps', \ElementsKit_Lite::widget_url() . 'init/assets/js/gmaps.min.js', array('jquery'), false, true );
+        
     }
     public function frontend_css() {
         if(!is_admin()){
-            wp_enqueue_style( 'elementskit-core', \ElementsKit_Lite::widget_url() . 'init/assets/css/ekit-core.css', false, \ElementsKit_Lite::version() );
+            wp_enqueue_style( 'ekit-widget-styles', \ElementsKit_Lite::widget_url() . 'init/assets/css/widget-styles.css', false, \ElementsKit_Lite::version() );
+            wp_enqueue_style( 'ekit-widget-styles-pro', \ElementsKit_Lite::widget_url() . 'init/assets/css/widget-styles-pro.css', false, \ElementsKit_Lite::version() );
+
+            wp_enqueue_style( 'ekit-responsive', \ElementsKit_Lite::widget_url() . 'init/assets/css/responsive.css', false, \ElementsKit_Lite::version() );
         };
+
+
+
 
         if ( is_rtl() ) wp_enqueue_style( 'elementskit-rtl', \ElementsKit_Lite::widget_url() . 'init/assets/css/rtl.css', false, \ElementsKit_Lite::version() );
     }
 
-    public function enqueue_preview_style() {
-        if (function_exists( 'wpforms' )) {
+    public function enqueue_3rd_party_style() {
+        if (function_exists( 'weforms' )) {
             wp_enqueue_style( 'weforms', plugins_url('/weforms/assets/wpuf/css/frontend-forms.css', 'weforms' ), false, \ElementsKit_Lite::version() );
         }
 

@@ -590,7 +590,8 @@ class ElementsKit_Widget_Image_Comparison extends Widget_Base {
 					),
 				),
 				'selectors'  => array(
-					'{{WRAPPER}} .elementskit-image-comparison .twentytwenty-handle:before,{{WRAPPER}} .elementskit-image-comparison .twentytwenty-handle:after' => 'height: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .twentytwenty-horizontal .twentytwenty-handle:before, {{WRAPPER}} .twentytwenty-horizontal .twentytwenty-handle:after' => 'width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .twentytwenty-vertical .twentytwenty-handle:before, {{WRAPPER}} .twentytwenty-vertical .twentytwenty-handle:after' => 'height: {{SIZE}}{{UNIT}};',
 				)
 			)
 		);
@@ -601,7 +602,7 @@ class ElementsKit_Widget_Image_Comparison extends Widget_Base {
 				'label'   => esc_html__( 'Divider Color', 'elementskit-lite' ),
 				'type'    => Controls_Manager::COLOR,
 				'selectors' => array(
-					'{{WRAPPER}} .elementskit-image-comparison .twentytwenty-handle:before,{{WRAPPER}} .elementskit-image-comparison .twentytwenty-handle:after' => 'background-color: {{VALUE}};',
+					'{{WRAPPER}} .elementskit-image-comparison .twentytwenty-handle:before, {{WRAPPER}} .elementskit-image-comparison .twentytwenty-handle:after' => 'background-color: {{VALUE}};',
 				),
 			)
 		);

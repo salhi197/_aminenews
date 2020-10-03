@@ -33,7 +33,7 @@ class ElementsKit_Widget_Social extends Widget_Base {
         $this->start_controls_section(
             'ekit_socialmedia_section_tab_content',
             [
-                'label' => esc_html__('Social Media', 'elementskit-lite'),
+                'label' => esc_html__('Social Icons', 'elementskit-lite'),
             ]
         );
 
@@ -462,12 +462,6 @@ class ElementsKit_Widget_Social extends Widget_Base {
                 'label'         => esc_html__('Padding', 'elementskit-lite'),
                 'type'          => Controls_Manager::DIMENSIONS,
                 'size_units'    => ['px', 'em'],
-				'default' => [
-					'top' => '6',
-					'right' => '7',
-					'bottom' => '6' ,
-					'left' => '7',
-				],
                 'selectors' => [
                     '{{WRAPPER}} .ekit_social_media > li > a' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
@@ -566,7 +560,8 @@ class ElementsKit_Widget_Social extends Widget_Base {
 					'{{WRAPPER}} .ekit_social_media > li > a' => 'width: {{SIZE}}{{UNIT}};',
                 ],
                 'condition' => [
-                    'ekit_socialmedai_list_style_use_height_and_width' => 'yes'
+					'ekit_socialmedai_list_style_use_height_and_width' => 'yes',
+					'ekit_socialmedia_style' => 'icon',
                 ]
 			]
 		);
@@ -596,7 +591,8 @@ class ElementsKit_Widget_Social extends Widget_Base {
 					'{{WRAPPER}} .ekit_social_media > li > a' => 'height: {{SIZE}}{{UNIT}};',
                 ],
                 'condition' => [
-                    'ekit_socialmedai_list_style_use_height_and_width' => 'yes'
+                    'ekit_socialmedai_list_style_use_height_and_width' => 'yes',
+					'ekit_socialmedia_style' => 'icon',
                 ]
 			]
 		);
@@ -620,7 +616,7 @@ class ElementsKit_Widget_Social extends Widget_Base {
 				],
 				'default' => [
 					'unit' => 'px',
-					'size' => 20,
+					'size' => 28,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .ekit_social_media > li > a' => 'line-height: {{SIZE}}{{UNIT}};',

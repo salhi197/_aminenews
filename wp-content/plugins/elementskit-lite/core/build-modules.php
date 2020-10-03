@@ -45,7 +45,7 @@ class Build_Modules{
             }
 
             if(isset($this->all_modules[$module_slug]['path'])){
-                include $this->all_modules[$module_slug]['path'] . 'init.php';
+                include_once $this->all_modules[$module_slug]['path'] . 'init.php';
             }
 
             // make the class name and call it.
